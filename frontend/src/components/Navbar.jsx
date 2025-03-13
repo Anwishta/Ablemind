@@ -1,7 +1,8 @@
 import { useState, useContext, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
-import { assets } from "../assets/assets";
+import { assets } from "../../public/assets/assets";
+import GoogleTranslator from "./GoogleTranslator";
 
 
 const Navbar = () => {
@@ -73,6 +74,7 @@ const Navbar = () => {
           className="w-5 cursor-pointer"
           alt="Search"
         />
+        <GoogleTranslator />
         <div className="group relative">
           <img
             onClick={() => (token ? null : navigate("/login"))}

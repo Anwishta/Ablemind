@@ -1,0 +1,27 @@
+{
+  "name": "ablemind",
+  "version": "1.0.0",
+  "description": "AbleMind is an inclusive e-learning platform designed to empower individuals with disabilities by providing accessible courses, AI-powered assistance, and adaptive learning tools to ensure equal education opportunities for all. 🎓🌍",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "backend": "cd backend && nodemon index.js",
+    "frontend": "cd frontend && npm run dev",
+    "dev": "vite" ,
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anwishta/Ablemind.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Anwishta/Ablemind/issues"
+  },
+  "homepage": "https://github.com/Anwishta/Ablemind#readme",
+  "dependencies": {
+    "concurrently": "^9.1.2",
+    "nodemon": "^2.0.22"
+  }
+}

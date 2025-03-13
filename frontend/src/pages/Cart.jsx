@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom"; // Ensure navigate works
 import { ShopContext } from "../context/ShopContext";
 import Title from "../components/Title";
-import { assets } from "../assets/assets";
+import { assets } from "../../public/assets/assets";
 import CartTotal from "../components/CartTotal";
 
 const Cart = () => {

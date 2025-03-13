@@ -3,8 +3,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import Title from "../components/Title";
 import CartTotal from "../components/CartTotal";
-import stripeLogo from "../assets/stripe_logo.png";
-import razorpayLogo from "../assets/razorpay_logo.png";
+import stripeLogo from "../../public/assets/stripe_logo.png";
+import razorpayLogo from "../../public/assets/razorpay_logo.png";
 import { ShopContext } from "../context/ShopContext";
 
 const PlaceOrder = () => {
