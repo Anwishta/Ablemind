@@ -125,7 +125,7 @@ const Collection = () => {
       <div className="flex-1">
         <div className="flex justify-between text-base sm:text-2xl mb-4">
           {/* Title */}
-          <Title text1={'ALL'} text2={'COURSES'} />
+          <Title text1={'ALL'} text2={'COURSE'} />
 
           {/* Product Sort */}
           <select onChange={(e) => setSortType(e.target.value)}
