@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
-import { assets } from "../../public/assets/assets";
+import { assets } from "../assets/assets";
 import GoogleTranslator from "./GoogleTranslator";
 
 

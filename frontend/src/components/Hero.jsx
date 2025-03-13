@@ -1,5 +1,5 @@
 import React from 'react'
-import { assets } from '../../public/assets/assets';
+import { assets } from '../assets/assets';
 import SignLanguageTranslator from './SignLanguageTranslator';
 
 const Hero = () => {
