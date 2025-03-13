@@ -1,11 +1,19 @@
 import React from 'react'
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
+import Hero from '../components/Hero'
+import LatestCollection from '../components/LatestCollection'
+
+import OurPolicy from '../components/OurPolicy'
+import NewsLetterBox from '../components/NewsLetterBox'
+import MostPopular from '../components/MostPopular'
+
 const Home = () => {
   return (
-    <div><Navbar />
-    
-      <Footer />
+    <div>
+       <Hero/>
+       <LatestCollection/>
+       <MostPopular/>
+       <OurPolicy/>
+       <NewsLetterBox/>
     </div>
   )
 }
