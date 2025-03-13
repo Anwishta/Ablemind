@@ -13,11 +13,11 @@ const Product = () => {
   const [size, setSize] = useState('');
 
   useEffect(() => {
-    if (products.length > 0) { // Ensure products are loaded before searching
+    if (products.length > 0) {
       const product = products.find((item) => item._id === productId);
       if (product) {
         setProductData(product);
-        setImage(product.image[0]); // Default image
+        setImage(product.image[0]);
       }
     }
   }, [productId, products]);
@@ -30,23 +30,8 @@ const Product = () => {
     <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100">
       <div className="flex gap-12 sm:gap-12 flex-col sm:flex-row">
         {/* -- Image Section -- */}
-        <div className="flex-1 flex flex-col-reverse gap-3 sm:flex-row">
-          <div className="flex sm:flex-col overflow-x-auto sm:overflow-y-auto justify-between sm:justify-normal sm:w-[18.7%] w-full">
-            {productData.image.map((item, index) => (
-              <img
-                src={item}
-                key={index}
-                alt={`Thumbnail ${index + 1}`}
-                className="w-[24%] sm:w-full sm:mb-3 flex-shrink-0 cursor-pointer"
-                onClick={() => setImage(item)}
-              />
-            ))}
-          </div>
-
-          {/* Main Image */}
-          <div className="w-full sm:w-[80%]">
-            <img src={image} alt="Main Product" className="w-full h-auto" />
-          </div>
+        <div className="flex-1">
+          <img src={image} alt="Main Product" className="w-full h-auto" />
         </div>
 
         {/* -- Product Info -- */}
@@ -67,22 +52,6 @@ const Product = () => {
             {productData.price}
           </p>
           <p className="my-5 text-gray-500 md:w-4/5">{productData.description}</p>
-
-          {/* Size Selection */}
-          <div className="flex flex-col gap-4 my-8">
-            <p>Select Size</p>
-            <div className="flex gap-2">
-              {productData.sizes.map((item, index) => (
-                <button
-                  key={index}
-                  onClick={() => setSize(item)}
-                  className={`border py-2 px-4 bg-gray-100 ${item === size ? 'border-black' : ''}`}
-                >
-                  {item}
-                </button>
-              ))}
-            </div>
-          </div>
 
           <button
             onClick={() => addToCart(productData._id, size)}
