@@ -109,19 +109,19 @@ const Collection = () => {
 
       {/* Right Section */}
       <div className="flex-1">
-        <div className="flex justify-between text-base sm:text-2xl mb-4">
-          <Title text1="ALL" text2="COURSES" />
+      <div className="flex justify-between text-base sm:text-2xl mb-4">
+  <Title text1="ALL" text2="COURSES" />
 
-          {/* Sort Dropdown */}
-          <select
-            onChange={(e) => setSortType(e.target.value)}
-            className="border border-gray-300 text-sm px-2 py-1 focus:outline-none"
-          >
-            <option value="relevant">Sort by: Relevant</option>
-            <option value="low-high">Sort by: Low to High</option>
-            <option value="high-low">Sort by: High to Low</option>
-          </select>
-        </div>
+  {/* Sort Dropdown */}
+  <select
+    onChange={(e) => setSortType(e.target.value)}
+    className="border border-gray-300 text-sm px-2 py-1 focus:outline-none"
+  >
+    <option value="relevant">Sort by: Relevant</option>
+    <option value="low-high">Sort by: Low to High</option>
+    <option value="high-low">Sort by: High to Low</option>
+  </select>
+</div>
 
         {/* Product Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
