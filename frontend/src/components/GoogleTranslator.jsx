@@ -24,8 +24,15 @@ const GoogleTranslator = () => {
             script.async = true;
             document.body.appendChild(script);
         } else {
-            window.googleTranslateElementInit(); 
+            window.googleTranslateElementInit();
         }
+
+        // Hides the default Google Translate logo
+        setTimeout(() => {
+            const googleLogo = document.querySelector(".goog-te-gadget span");
+            if (googleLogo) googleLogo.style.display = "none";
+        }, 1000);
+        
     }, []);
 
     return <div id="google_translate_element"></div>;

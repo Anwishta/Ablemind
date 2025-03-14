@@ -74,6 +74,8 @@ const Navbar = () => {
           className="w-5 cursor-pointer"
           alt="Search"
         />
+        
+    
         <GoogleTranslator />
         <div className="group relative">
           <img
