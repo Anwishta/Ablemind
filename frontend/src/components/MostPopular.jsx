@@ -10,7 +10,7 @@ const MostPopular = () => {
     useEffect(() => {
         const bestProduct = products.filter((item) => item.bestseller);
         setBestSeller(bestProduct.slice(0, 5));
-    }, [products]); // Add `products` as a dependency to ensure it updates when context changes
+    }, [products]); // Add products as a dependency to ensure it updates when context changes
 
     return (
         <div className='my-10'>
