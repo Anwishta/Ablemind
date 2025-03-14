@@ -3,15 +3,13 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import { assets } from "../assets/assets";
 import GoogleTranslator from "./GoogleTranslator";
-
+import FontSizeAdjuster from "./FontSizeAdjuster";
 
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
   
   const navigate = useNavigate();
   const { setShowSearch, getCartCount, token, setToken, cartItems, setCartItems } = useContext(ShopContext);
-
-  console.log("Current cartItems in Navbar:", cartItems);  // Log cartItems, not setCartItems
 
   useEffect(() => {
     const storedCart = localStorage.getItem("cart");
@@ -22,19 +20,16 @@ const Navbar = () => {
         console.error("Error parsing stored cart:", error);
       }
     }
-  }, []);  // Initial load - setting cart items from localStorage
+  }, []);
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cartItems));  // Updating localStorage whenever cartItems change
-  }, [cartItems]);  // This will be triggered when cartItems change
-  
-  
-
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+  }, [cartItems]);
 
   const logout = () => {
     navigate("/login");
     localStorage.removeItem("token");
-    localStorage.removeItem("cart"); // Clear cart on logout
+    localStorage.removeItem("cart");
     setToken("");
     setCartItems({});
   };
@@ -48,19 +43,15 @@ const Navbar = () => {
       <ul className="hidden sm:flex gap-5 text-sm text-gray-700">
         <NavLink to="/" className="flex flex-col items-center gap-1">
           <p>HOME</p>
-          <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
         <NavLink to="/collection" className="flex flex-col items-center gap-1">
           <p>COURSES</p>
-          <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
         <NavLink to="/about" className="flex flex-col items-center gap-1">
           <p>ABOUT</p>
-          <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
         <NavLink to="/contact" className="flex flex-col items-center gap-1">
           <p>CONTACT</p>
-          <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
       </ul>
 
@@ -75,6 +66,8 @@ const Navbar = () => {
           alt="Search"
         />
         <GoogleTranslator />
+        <FontSizeAdjuster /> 
+        
         <div className="group relative">
           <img
             onClick={() => (token ? null : navigate("/login"))}
@@ -111,55 +104,6 @@ const Navbar = () => {
           className="w-5 cursor-pointer sm:hidden"
           alt="Menu"
         />
-      </div>
-
-      <div
-        className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${
-          visible ? "w-full" : "w-0"
-        }`}
-      >
-        <div className="flex flex-col text-gray-600">
-          <div
-            onClick={() => setVisible(false)}
-            className="flex items-center gap-4 p-3 cursor-pointer"
-          >
-            <img
-              className="h-4 rotate-180"
-              src={assets.dropdown_icon}
-              alt="Back"
-            />
-            <p>Back</p>
-          </div>
-
-          <NavLink
-            className="py-2 pl-6 border"
-            to="/"
-            onClick={() => setVisible(false)}
-          >
-            HOME
-          </NavLink>
-          <NavLink
-            className="py-2 pl-6 border"
-            to="/collection"
-            onClick={() => setVisible(false)}
-          >
-            COLLECTION
-          </NavLink>
-          <NavLink
-            className="py-2 pl-6 border"
-            to="/about"
-            onClick={() => setVisible(false)}
-          >
-            ABOUT
-          </NavLink>
-          <NavLink
-            className="py-2 pl-6 border"
-            to="/contact"
-            onClick={() => setVisible(false)}
-          >
-            CONTACT
-          </NavLink>
-        </div>
       </div>
     </div>
   );

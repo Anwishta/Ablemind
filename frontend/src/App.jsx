@@ -16,6 +16,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Verify from './pages/Verify';
 import VoiceNavigation from './components/VoiceNavigation';
+import ChatBot from './components/ChatBot';
 
 
 const App = () => {
@@ -37,6 +38,7 @@ const App = () => {
        <Route path="/product/:productId" element={<Product />} />
        <Route path="/verify" element={<Verify/>}/>
       </Routes>
+      <ChatBot />
     <Footer/>
     </div>
   );

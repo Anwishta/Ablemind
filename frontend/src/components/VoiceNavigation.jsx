@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 import { useNavigate } from "react-router-dom";
-import { products} from "../assets/assets"; 
+import { products } from "../assets/assets"; 
+import ProductItem from "../components/ProductItem"; 
 
 const VoiceNavigation = () => {
   const navigate = useNavigate();
@@ -9,6 +10,7 @@ const VoiceNavigation = () => {
   const [awaitingResponse, setAwaitingResponse] = useState(false);
   const [courses, setCourses] = useState([]);
   const [currentCategory, setCurrentCategory] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const routes = {
     home: "/",
@@ -23,7 +25,6 @@ const VoiceNavigation = () => {
     product: "/product/1",
   };
 
-  // Course categories mapping
   const courseCategories = {
     maths: "Maths",
     english: "English",
@@ -45,9 +46,12 @@ const VoiceNavigation = () => {
   const fetchCourses = (category) => {
     setCourses([]); 
     setCurrentCategory(category);
+    setCurrentIndex(0);
     speak(`Fetching ${category} courses for you...`);
     
-    const filteredCourses = products.filter((course) => course.category.toLowerCase() === category.toLowerCase());
+    const filteredCourses = products.filter((course) => 
+      course.category.toLowerCase() === category.toLowerCase()
+    );
   
     if (filteredCourses.length > 0) {
       setCourses(filteredCourses);
@@ -59,22 +63,12 @@ const VoiceNavigation = () => {
       speak(`Sorry, no courses found for ${category}.`);
     }
   };
-  
+
   const handleCommand = (command) => {
     if (awaitingResponse) {
       if (command.includes("yes")) {
-        if (courses.length > 0) {
-          let headlines = courses
-            .slice(0, 5)
-            .map((course, index) => `Course ${index + 1}: ${course.name}`)
-            .join(". ");
-  
-          setAwaitingResponse(false); 
-          setTimeout(() => speak(`Here are some top ${currentCategory} courses: ${headlines}`), 500);
-        } else {
-          speak(`Sorry, no courses found for ${currentCategory}.`);
-          setAwaitingResponse(false);
-        }
+        readCourses();
+        setAwaitingResponse(false);
       } else if (command.includes("no")) {
         speak("Alright, let me know if you need anything else.");
         setAwaitingResponse(false);
@@ -82,7 +76,8 @@ const VoiceNavigation = () => {
       resetTranscript();
       return;
     }
-  
+
+    // Navigation commands
     const match = command.match(/(?:open|go to) (.+)/);
     if (match) {
       const page = match[1].trim();
@@ -95,15 +90,36 @@ const VoiceNavigation = () => {
       }
       return;
     }
-  
+
     Object.keys(courseCategories).forEach((categoryKey) => {
-      if (command.includes(`recommend some courses for ${categoryKey}`)) {
+      if (
+        command.includes(`recommend some courses for ${categoryKey}`) || 
+        command.includes(`fetch some courses for ${categoryKey}`)
+      ) {
         fetchCourses(courseCategories[categoryKey]);
         resetTranscript();
       }
     });
+
+    if (command.includes("next") && courses.length > currentIndex + 5) {
+      setCurrentIndex((prev) => prev + 5);
+      readCourses();
+    }
   };
-  
+
+  const readCourses = () => {
+    if (courses.length > currentIndex) {
+      let nextCourses = courses.slice(currentIndex, currentIndex + 5);
+      let headlines = nextCourses
+        .map((course, index) => `Course ${index + 1}: ${course.name}`)
+        .join(". ");
+
+      speak(`Here are some ${currentCategory} courses: ${headlines}`);
+    } else {
+      speak("No more courses available.");
+    }
+  };
+
   if (!browserSupportsSpeechRecognition) {
     return <p>Your browser does not support speech recognition.</p>;
   }
@@ -139,20 +155,17 @@ const VoiceNavigation = () => {
       {courses.length > 0 && (
         <div className="mt-4 text-left">
           <h3 className="font-semibold">Recommended {currentCategory} Courses:</h3>
-          <ul className="list-disc ml-5">
-            {courses.slice(0, 5).map((course, index) => (
-              <li key={index}>
-                <a
-                  href={course.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 underline"
-                >
-                  {course.name}
-                </a>
-              </li>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6"> 
+            {courses.slice(currentIndex, currentIndex + 5).map((item) => (
+              <ProductItem
+                key={item._id} 
+                id={item._id}
+                image={item.image}
+                name={item.name}
+                price={item.price}
+              />
             ))}
-          </ul>
+          </div>
         </div>
       )}
     </div>
