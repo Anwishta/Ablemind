@@ -3,6 +3,10 @@ import { useParams } from 'react-router-dom';
 import { ShopContext } from '../context/ShopContext';
 import { assets } from '../assets/assets';
 import RelatedProducts from '../components/RelatedProducts';
+import VideoLectures from "../components/VideoLectures";  // Import the component
+
+
+
 
 const Product = () => {
   const { productId } = useParams();
@@ -10,7 +14,7 @@ const Product = () => {
 
   const [productData, setProductData] = useState(null);
   const [image, setImage] = useState('');
-  const [size, setSize] = useState('');
+  
 
   useEffect(() => {
     if (products.length > 0) {
@@ -61,13 +65,11 @@ const Product = () => {
           </button>
 
           <hr className="mt-8 sm:w-4/5" />
-          <div className="text-sm text-gray-700 mt-5 flex flex-col gap-1">
-            <p>100% Original Product.</p>
-            <p>Cash on delivery is available on this Product.</p>
-            <p>Easy return and exchange policy within 7 days.</p>
-          </div>
+          
         </div>
       </div>
+
+      <VideoLectures />
 
       {/* Description and Review Section */}
       <div className="mt-20">
@@ -77,10 +79,10 @@ const Product = () => {
         </div>
         <div className="flex flex-col gap-4 border px-6 py-6 text-sm text-gray-500">
           <p>
-            An e-commerce website is an online platform that facilitates the buying and selling of products or services over the internet.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste sit in alias exercitationem, vero natus animi reiciendis dignissimos maiores ipsum molestias temporibus perferendis esse, dicta a? Eos vitae accusantium assumenda!
           </p>
           <p>
-            E-commerce websites typically display products or services along with detailed descriptions, pricing, and other relevant information to help users make purchasing decisions.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa omnis vitae eligendi iste perferendis animi excepturi tempore maxime veniam quo dolor incidunt delectus odio commodi, provident amet. Esse, officia atque!
           </p>
         </div>
       </div>

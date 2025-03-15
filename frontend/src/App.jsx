@@ -16,15 +16,18 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Verify from './pages/Verify';
 import VoiceNavigation from './components/VoiceNavigation';
+import CustomCursor from './components/CustomCursor';
 
 
 const App = () => {
   return (
     <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
+      <CustomCursor />
      <ToastContainer/> 
      <Navbar/>
      <SearchBar/>
      <VoiceNavigation />
+     
       <Routes>
        <Route path="/about" element={<About/>}/>
        <Route path="/cart" element={<Cart/>}/>

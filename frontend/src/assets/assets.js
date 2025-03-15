@@ -12,7 +12,7 @@ import p_img11 from './p_img11.png'
 import p_img12 from './p_img12.png'
 import p_img13 from './p_img13.png'
 import p_img14 from './p_img14.png'
-
+import p_vdo1  from './p_vdo1.mp4'
 
 
 import logo from './logo.png'
@@ -35,6 +35,7 @@ import stripe_logo from './stripe_logo.png'
 import cross_icon from './cross_icon.png'
 import translate_icon from './translate_icon.png'
 
+
 export const assets = {
     logo,
     hero_img,
@@ -54,7 +55,8 @@ export const assets = {
     razorpay_logo,
     stripe_logo,
     cross_icon,
-    translate_icon
+    translate_icon,
+    p_vdo1
 }
 
 export const products = [
@@ -212,7 +214,8 @@ export const products = [
         subCategory: "Medium",
         sizes: ["S", "M", "L", "XL"],
         date: 1716625545448,
-        bestseller: false
+        bestseller: false,
+        video: assets.p_vdo1
     },
     {
         _id: "aaaan",
