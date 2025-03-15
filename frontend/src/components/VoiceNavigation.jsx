@@ -3,6 +3,7 @@ import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognitio
 import { useNavigate } from "react-router-dom";
 import { products } from "../assets/assets"; 
 import ProductItem from "../components/ProductItem"; 
+import { Mic, MicOff } from "lucide-react"; 
 
 const VoiceNavigation = () => {
   const navigate = useNavigate();
@@ -77,7 +78,6 @@ const VoiceNavigation = () => {
       return;
     }
 
-    // Navigation commands
     const match = command.match(/(?:open|go to) (.+)/);
     if (match) {
       const page = match[1].trim();
@@ -125,37 +125,27 @@ const VoiceNavigation = () => {
   }
 
   return (
-    <div className="p-4 bg-gray-100 rounded-lg shadow-md text-center">
-      <h2 className="text-lg font-semibold">Voice-Controlled Navigation & Course Recommendation</h2>
-      <p className="mt-2 text-gray-700">🎤 Listening: {listening ? "ON" : "OFF"}</p>
+    <div className="relative">
+      <div className="fixed left-4 bottom-4 transform -translate-y-1/2 flex items-center space-x-3 p-3 text-white rounded-lg shadow-lg">
+        <button
+          onClick={() => listening ? SpeechRecognition.stopListening() : SpeechRecognition.startListening({ continuous: true })}
+          className={`w-12 h-12 flex items-center justify-center rounded-full 
+            transition-all duration-300 shadow-md hover:shadow-lg 
+            ${listening ? "bg-red-500 text-white animate-pulse" : "bg-blue-500 text-white"}
+          `}
+        >
+          {listening ? <MicOff size={24} /> : <Mic size={24} />}
+        </button>
 
-      <button
-        onClick={() => SpeechRecognition.startListening({ continuous: true })}
-        className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md"
-      >
-        Start Listening
-      </button>
-      <button
-        onClick={SpeechRecognition.stopListening}
-        className="mt-2 ml-2 px-4 py-2 bg-red-500 text-white rounded-md"
-      >
-        Stop
-      </button>
-      <button
-        onClick={resetTranscript}
-        className="mt-2 ml-2 px-4 py-2 bg-gray-500 text-white rounded-md"
-      >
-        Reset
-      </button>
-
-      <p className="mt-4 p-2 border border-gray-300 rounded bg-white">
-        <strong>Transcript:</strong> {transcript}
-      </p>
+        <p className="text-sm bg-gray-100 text-gray-800 p-2 rounded-md shadow-md w-60">
+          <strong>Transcript:</strong> {transcript || "Start speaking..."}
+        </p>
+      </div>
 
       {courses.length > 0 && (
-        <div className="mt-4 text-left">
-          <h3 className="font-semibold">Recommended {currentCategory} Courses:</h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6"> 
+        <div className="mt-4 p-6 bg-white shadow-lg rounded-lg">
+          <h3 className="font-semibold text-lg">Recommended {currentCategory} Courses:</h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-4"> 
             {courses.slice(currentIndex, currentIndex + 5).map((item) => (
               <ProductItem
                 key={item._id} 

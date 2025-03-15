@@ -23,6 +23,8 @@
   "dependencies": {
     "concurrently": "^9.1.2",
     "gsap": "^3.12.7",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "simple-peer": "^9.11.1",
+    "socket.io-client": "^4.8.1"
   }
 }

@@ -18,7 +18,7 @@ import Verify from './pages/Verify';
 import VoiceNavigation from './components/VoiceNavigation';
 import ChatBot from './components/ChatBot';
 import CustomCursor from './components/CustomCursor';
-
+import VideoCall from './components/VideoCall';
 
 const App = () => {
   return (
@@ -27,7 +27,7 @@ const App = () => {
      <Navbar/>
      <SearchBar/>
      <VoiceNavigation />
-      <CustomCursor />
+      {/* <CustomCursor /> */}
       <Routes>
        <Route path="/about" element={<About/>}/>
        <Route path="/cart" element={<Cart/>}/>
@@ -39,6 +39,7 @@ const App = () => {
        <Route path="/place-order" element={<PlaceOrder/>}/>
        <Route path="/product/:productId" element={<Product />} />
        <Route path="/verify" element={<Verify/>}/>
+       <Route path="/videocall/:roomID" element={<VideoCall />} />
       </Routes>
       <ChatBot />
     <Footer/>
