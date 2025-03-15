@@ -7,7 +7,6 @@ import FontSizeAdjuster from "./FontSizeAdjuster";
 
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
-  
   const navigate = useNavigate();
   const { setShowSearch, getCartCount, token, setToken, cartItems, setCartItems } = useContext(ShopContext);
 
@@ -37,7 +36,7 @@ const Navbar = () => {
   return (
     <div className="flex items-center justify-between py-5 font-medium">
       <Link to="/">
-        <img src={assets.logo} className="w-36" alt="Logo" />
+        <img src={assets.logo} className="w-36" alt="Logo" aria-label="Website Logo" />
       </Link>
 
       <ul className="hidden sm:flex gap-5 text-sm text-gray-700">
@@ -63,17 +62,20 @@ const Navbar = () => {
           }}
           src={assets.search_icon}
           className="w-5 cursor-pointer"
-          alt="Search"
+          alt="Search Icon"
+          aria-label="Search Icon"
         />
+
         <GoogleTranslator />
-        <FontSizeAdjuster /> 
-        
+        <FontSizeAdjuster />
+
         <div className="group relative">
           <img
             onClick={() => (token ? null : navigate("/login"))}
             src={assets.profile_icon}
             className="w-5 cursor-pointer"
-            alt="Profile"
+            alt="Profile Icon"
+            aria-label="Profile Icon"
           />
           {token && (
             <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4">
@@ -92,18 +94,62 @@ const Navbar = () => {
             </div>
           )}
         </div>
+
         <Link to="/cart" className="relative">
-          <img src={assets.cart_icon} className="w-5 min-w-5" alt="Cart" />
+          <img
+            src={assets.cart_icon}
+            className="w-5 min-w-5 cursor-pointer"
+            alt="Cart Icon"
+            aria-label="Cart Icon"
+          />
           <p className="absolute right-[-5px] bottom-[-5px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
             {getCartCount()}
           </p>
         </Link>
+
+        {/* Mobile Menu Button */}
         <img
           onClick={() => setVisible(true)}
           src={assets.menu_icon}
           className="w-5 cursor-pointer sm:hidden"
-          alt="Menu"
+          alt="Menu Icon"
+          aria-label="Menu Icon"
         />
+      </div>
+
+      {/* Mobile Sidebar */}
+      <div
+        className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${
+          visible ? "w-full" : "w-0"
+        }`}
+      >
+        <div className="flex flex-col text-gray-600">
+          <div
+            onClick={() => setVisible(false)}
+            className="flex items-center gap-4 p-3 cursor-pointer"
+          >
+            <img
+              className="h-4 rotate-180"
+              src={assets.dropdown_icon}
+              alt="Back Icon"
+              aria-label="Back Icon"
+            />
+            <p>Back</p>
+          </div>
+
+          <NavLink className="py-2 pl-6 border" to="/" onClick={() => setVisible(false)}>
+            HOME
+          </NavLink>
+          <NavLink className="py-2 pl-6 border" to="/collection" onClick={() => setVisible(false)}>
+            COURSES
+          </NavLink>
+          <NavLink className="py-2 pl-6 border" to="/about" onClick={() => setVisible(false)}>
+            ABOUT
+          </NavLink>
+          <NavLink className="py-2 pl-6 border" to="/contact" onClick={() => setVisible(false)}>
+            CONTACT
+          </NavLink>
+        </div>
       </div>
     </div>
   );

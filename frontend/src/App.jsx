@@ -17,6 +17,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Verify from './pages/Verify';
 import VoiceNavigation from './components/VoiceNavigation';
 import ChatBot from './components/ChatBot';
+import CustomCursor from './components/CustomCursor';
 
 
 const App = () => {
@@ -26,6 +27,7 @@ const App = () => {
      <Navbar/>
      <SearchBar/>
      <VoiceNavigation />
+      <CustomCursor />
       <Routes>
        <Route path="/about" element={<About/>}/>
        <Route path="/cart" element={<Cart/>}/>
@@ -43,8 +45,4 @@ const App = () => {
     </div>
   );
 };
-
-
-
-export default App
-
+export default App;
