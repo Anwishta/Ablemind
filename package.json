@@ -7,7 +7,7 @@
     "start": "concurrently \"npm run backend\" \"npm run frontend\"",
     "backend": "cd backend && nodemon index.js",
     "frontend": "cd frontend && npm run dev",
-    "dev": "vite" ,
+    "dev": "vite",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,6 +22,7 @@
   "homepage": "https://github.com/Anwishta/Ablemind#readme",
   "dependencies": {
     "concurrently": "^9.1.2",
+    "gsap": "^3.12.7",
     "nodemon": "^2.0.22"
   }
 }

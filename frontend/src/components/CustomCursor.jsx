@@ -11,7 +11,6 @@ const CustomCursor = () => {
 
       // Get the element under the cursor
       const hoveredElement = document.elementFromPoint(e.clientX, e.clientY);
-
       let textToRead = "";
 
       if (hoveredElement) {
@@ -38,10 +37,12 @@ const CustomCursor = () => {
 
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseleave", handleMouseLeave);
-    
+    document.body.style.cursor = "none"; // Hide default cursor
+
     return () => {
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseleave", handleMouseLeave);
+      document.body.style.cursor = "auto"; // Restore default cursor
     };
   }, [hoveredWord]);
 
@@ -60,15 +61,14 @@ const CustomCursor = () => {
   };
 
   const speakWord = (word) => {
-    if (synth.speaking) synth.cancel(); // Stop previous speech before speaking new word
-
+    if (synth.speaking) synth.cancel(); 
     const utterance = new SpeechSynthesisUtterance(word);
     synth.speak(utterance);
   };
 
   return (
     <div
-      className="fixed top-0 left-0 w-4 h-4 bg-black rounded-full pointer-events-none"
+      className="fixed top-0 left-0 w-6 h-6 bg-[#000000] rounded-full pointer-events-none transition-transform duration-200 ease-out scale-125"
       style={{
         transform: `translate(${position.x}px, ${position.y}px)`,
       }}
