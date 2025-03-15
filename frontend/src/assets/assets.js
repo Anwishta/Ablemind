@@ -13,6 +13,8 @@ import p_img12 from './p_img12.png'
 import p_img13 from './p_img13.png'
 import p_img14 from './p_img14.png'
 import p_vdo1  from './p_vdo1.mp4'
+import p_srt1 from './p_srt1.srt?url'
+
 
 
 import logo from './logo.png'
@@ -56,7 +58,9 @@ export const assets = {
     stripe_logo,
     cross_icon,
     translate_icon,
+    p_srt1,
     p_vdo1
+    
 }
 
 export const products = [
@@ -215,8 +219,11 @@ export const products = [
         sizes: ["S", "M", "L", "XL"],
         date: 1716625545448,
         bestseller: false,
-        video: assets.p_vdo1
-    },
+        video: assets.p_vdo1,
+        subtitles: assets.p_srt1  
+    }
+    
+    ,
     {
         _id: "aaaan",
         name: "Verbs and Their Forms",
