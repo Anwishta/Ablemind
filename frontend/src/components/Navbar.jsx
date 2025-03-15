@@ -3,10 +3,10 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import { assets } from "../assets/assets";
 import GoogleTranslator from "./GoogleTranslator";
+import FontSizeAdjuster from "./FontSizeAdjuster";
 
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
-
   const navigate = useNavigate();
   const { setShowSearch, getCartCount, token, setToken, cartItems, setCartItems } = useContext(ShopContext);
 
@@ -42,19 +42,15 @@ const Navbar = () => {
       <ul className="hidden sm:flex gap-5 text-sm text-gray-700">
         <NavLink to="/" className="flex flex-col items-center gap-1">
           <p>HOME</p>
-          <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
         <NavLink to="/collection" className="flex flex-col items-center gap-1">
           <p>COURSES</p>
-          <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
         <NavLink to="/about" className="flex flex-col items-center gap-1">
           <p>ABOUT</p>
-          <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
         <NavLink to="/contact" className="flex flex-col items-center gap-1">
           <p>CONTACT</p>
-          <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
       </ul>
 
@@ -71,6 +67,7 @@ const Navbar = () => {
         />
 
         <GoogleTranslator />
+        <FontSizeAdjuster />
 
         <div className="group relative">
           <img
@@ -109,16 +106,18 @@ const Navbar = () => {
             {getCartCount()}
           </p>
         </Link>
+
+        {/* Mobile Menu Button */}
+        <img
+          onClick={() => setVisible(true)}
+          src={assets.menu_icon}
+          className="w-5 cursor-pointer sm:hidden"
+          alt="Menu Icon"
+          aria-label="Menu Icon"
+        />
       </div>
 
-      <img
-        onClick={() => setVisible(true)}
-        src={assets.menu_icon}
-        className="w-5 cursor-pointer sm:hidden"
-        alt="Menu Icon"
-        aria-label="Menu Icon"
-      />
-
+      {/* Mobile Sidebar */}
       <div
         className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${
           visible ? "w-full" : "w-0"
@@ -138,32 +137,16 @@ const Navbar = () => {
             <p>Back</p>
           </div>
 
-          <NavLink
-            className="py-2 pl-6 border"
-            to="/"
-            onClick={() => setVisible(false)}
-          >
+          <NavLink className="py-2 pl-6 border" to="/" onClick={() => setVisible(false)}>
             HOME
           </NavLink>
-          <NavLink
-            className="py-2 pl-6 border"
-            to="/collection"
-            onClick={() => setVisible(false)}
-          >
+          <NavLink className="py-2 pl-6 border" to="/collection" onClick={() => setVisible(false)}>
             COURSES
           </NavLink>
-          <NavLink
-            className="py-2 pl-6 border"
-            to="/about"
-            onClick={() => setVisible(false)}
-          >
+          <NavLink className="py-2 pl-6 border" to="/about" onClick={() => setVisible(false)}>
             ABOUT
           </NavLink>
-          <NavLink
-            className="py-2 pl-6 border"
-            to="/contact"
-            onClick={() => setVisible(false)}
-          >
+          <NavLink className="py-2 pl-6 border" to="/contact" onClick={() => setVisible(false)}>
             CONTACT
           </NavLink>
         </div>

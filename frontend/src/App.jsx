@@ -16,33 +16,32 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Verify from './pages/Verify';
 import VoiceNavigation from './components/VoiceNavigation';
+import ChatBot from './components/ChatBot';
 import CustomCursor from './components/CustomCursor';
 
 
 const App = () => {
   return (
-    <div>
-      <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
-        <ToastContainer /> 
-        <Navbar />
-        <SearchBar />
-        <VoiceNavigation />
-        <CustomCursor /> {/* Moved inside the main div */}
-        
-        <Routes>
-          <Route path="/about" element={<About />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/collection" element={<Collection />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/place-order" element={<PlaceOrder />} />
-          <Route path="/product/:productId" element={<Product />} />
-          <Route path="/verify" element={<Verify />} />
-        </Routes>
-        <Footer />
-      </div>
+    <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
+     <ToastContainer/> 
+     <Navbar/>
+     <SearchBar/>
+     <VoiceNavigation />
+      <CustomCursor />
+      <Routes>
+       <Route path="/about" element={<About/>}/>
+       <Route path="/cart" element={<Cart/>}/>
+       <Route path="/collection" element={<Collection/>}/>
+       <Route path="/contact" element={<Contact/>}/>
+       <Route path="/" element={<Home/>}/>
+       <Route path="/login" element={<Login/>}/>
+       <Route path="/orders" element={<Orders/>}/>
+       <Route path="/place-order" element={<PlaceOrder/>}/>
+       <Route path="/product/:productId" element={<Product />} />
+       <Route path="/verify" element={<Verify/>}/>
+      </Routes>
+      <ChatBot />
+    <Footer/>
     </div>
   );
 };
