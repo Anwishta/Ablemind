@@ -53,7 +53,6 @@ const CourseDetails = () => {
         speechRef.current = new SpeechSynthesisUtterance(course.description);
         speechRef.current.rate = 1.0;
 
-        // Update progress as text is spoken
         speechRef.current.onboundary = (event) => {
           const spokenPercentage = (event.charIndex / course.description.length) * 100;
           setProgress(spokenPercentage);
@@ -72,7 +71,6 @@ const CourseDetails = () => {
 
   return (
     <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100 relative">
-      {/* Circular Progress Indicator */}
       <div className="fixed top-6 left-6 w-16 h-16">
         <svg className="w-full h-full" viewBox="0 0 100 100">
           <circle cx="50" cy="50" r="45" strokeWidth="5" stroke="#E5E7EB" fill="transparent" />
