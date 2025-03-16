@@ -3,10 +3,7 @@ import { useParams } from 'react-router-dom';
 import { ShopContext } from '../context/ShopContext';
 import { assets } from '../assets/assets';
 import RelatedProducts from '../components/RelatedProducts';
-import VideoLectures from "../components/VideoLectures";  // Import the component
-
-
-
+import VideoLectures from "../components/VideoLectures";  
 
 const Product = () => {
   const { productId } = useParams();
@@ -14,7 +11,6 @@ const Product = () => {
 
   const [productData, setProductData] = useState(null);
   const [image, setImage] = useState('');
-  
 
   useEffect(() => {
     if (products.length > 0) {
@@ -33,6 +29,7 @@ const Product = () => {
   return (
     <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100">
       <div className="flex gap-12 sm:gap-12 flex-col sm:flex-row">
+        
         {/* -- Image Section -- */}
         <div className="flex-1">
           <img src={image} alt="Main Product" className="w-full h-auto" />
@@ -57,15 +54,15 @@ const Product = () => {
           </p>
           <p className="my-5 text-gray-500 md:w-4/5">{productData.description}</p>
 
+          {/* ✅ FIXED ADD TO CART BUTTON */}
           <button
-            onClick={() => addToCart(productData._id, size)}
+            onClick={() => addToCart(productData._id)}
             className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700"
           >
             ADD TO CART
           </button>
 
           <hr className="mt-8 sm:w-4/5" />
-          
         </div>
       </div>
 
