@@ -49,3 +49,40 @@ h1, h2, h3, h4, h5, h6, p, a, span, li, button {
 /* .btn:hover {
   background-color: #0056b3;
 } */
+
+/* Light Mode (Default) */
+html, body {
+  font-size: var(--global-font-size) !important; /* Ensure override */
+  background-color: white;
+  color: black;
+  transition: background-color 0.3s ease, color 0.3s ease, font-size 0.3s ease-in-out;
+}
+
+/* Dark Mode */
+.dark {
+  background-color: #121212;
+  color: white;
+}
+
+/* Ensure text contrast in dark mode */
+.dark a, .dark p, .dark span, .dark li, .dark button {
+  color: white;
+}
+
+/* Buttons in dark mode */
+.dark .btn {
+  color: white;
+  background-color: #333;
+}
+
+.dark button {
+  background-color: white;
+  color: black;
+}
+
+.dark button:active {
+  background-color: gray;
+}
+
+
+/* Ensure Navbar also follows dark mode */

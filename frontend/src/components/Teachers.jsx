@@ -55,31 +55,37 @@ const StarRating = ({ rating }) => {
 const Teachers = () => {
   return (
     <>
-    <div className='text-center text-3xl py-8'>
-                    <Title text1={'OUR'} text2={'TEACHERS'} />
-                    <p className='w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600'>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis deleniti, ad fugiat sunt facere inventore adipisci cumque molestias eum quo, dignissimos nemo veritatis, quod mollitia atque asperiores fuga quisquam voluptate.
-                    </p>
-                </div>
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6 flex justify-center items-center ">
-      
+      {/* Title Section */}
+      <div className="text-center text-3xl py-8">
+        <Title text1="OUR" text2="TEACHERS" />
+        <p className="w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600">
+          Our teachers are experienced professionals dedicated to providing top-notch education.
+        </p>
+      </div>
+
+      {/* Teachers Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-6 md:px-12 lg:px-20">
         {teachers.map((teacher) => (
           <div
             key={teacher.id}
+            className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 text-center hover:shadow-lg transition-shadow duration-300 transform hover:scale-105"
           >
             <img
               src={teacher.image}
               alt={teacher.name}
-              className="w-32 h-32 rounded-full mb-4"
+              className="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-gray-200 dark:border-gray-700"
             />
-            <h2 className="text-lg font-semibold">{teacher.name}</h2>
-            <p className="text-gray-600">{teacher.subject}</p>
-            <StarRating rating={teacher.rating} />
+            <h2 className="text-xl font-semibold text-gray-800 dark:text-white">{teacher.name}</h2>
+            <p className="text-gray-600 dark:text-gray-300 text-sm">{teacher.subject}</p>
+            <div className="mt-2">
+              <StarRating rating={teacher.rating} />
+            </div>
           </div>
         ))}
-    
-    </div>
-    <VideoCall />
+      </div>
+
+      {/* Video Call Section */}
+      <VideoCall />
     </>
   );
 };

@@ -4,7 +4,7 @@ import { assets } from "../assets/assets";
 import Title from "../components/Title";
 import ProductItem from "../components/ProductItem";
 
-const Collection = () => {
+const Collection = ({ isDarkMode }) => {
   const { products, search, showSearch } = useContext(ShopContext);
   const [showFilter, setShowFilter] = useState(false);
   const [filterProducts, setFilterProducts] = useState([]);
@@ -35,7 +35,6 @@ const Collection = () => {
       productsCopy = productsCopy.filter((item) => subCategory.includes(item.subCategory));
     }
 
-    // Apply sorting after filtering
     switch (sortType) {
       case "low-high":
         productsCopy.sort((a, b) => a.price - b.price);
@@ -55,84 +54,96 @@ const Collection = () => {
   }, [category, subCategory, search, showSearch, sortType]);
 
   return (
-    <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t">
+    <div className="flex flex-col sm:flex-row gap-10 pt-10 border-t">
       {/* Filter Section */}
-      <div className="min-w-60">
+      <div className="w-full sm:w-60">
         <p
           onClick={() => setShowFilter(!showFilter)}
           className="my-2 text-xl flex items-center cursor-pointer gap-2"
         >
           FILTERS
           <img
-            className={`h-3 sm:hidden transform ${showFilter ? "rotate-90" : ""}`}
+            className={`h-3 sm:hidden transform transition-transform ${
+              showFilter ? "rotate-90" : ""
+            }`}
             src={assets.dropdown_icon}
             alt="Arrow"
           />
         </p>
 
-        {/* Category Filter */}
-        <div className={`border border-gray-300 pl-5 py-3 mt-6 ${showFilter ? "" : "hidden"} sm:block`}>
-          <p className="mb-3 text-sm font-medium">CATEGORIES</p>
-          <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
-            {["Computer", "Maths", "English"].map((cat) => (
-              <label key={cat} className="flex gap-2">
-                <input
-                  className="w-3"
-                  type="checkbox"
-                  value={cat}
-                  onChange={(e) => toggleFilter(e.target.value, setCategory)}
-                />
-                {cat}
-              </label>
-            ))}
+        <div
+          className={`border  p-4 rounded-lg shadow-md bg-white dark:bg-gray-800 transition-all ${
+            showFilter ? "" : "hidden"
+          } sm:block`}
+        >
+          {/* Category Filter */}
+          <div className="mb-4">
+            <p className="mb-3 text-sm font-semibold">CATEGORIES</p>
+            <div className="flex flex-col gap-2 text-sm font-light text-gray-700 dark:text-gray-300">
+              {["Computer", "Maths", "English"].map((cat) => (
+                <label key={cat} className="flex gap-2 items-center">
+                  <input
+                    className="w-4 h-4"
+                    type="checkbox"
+                    value={cat}
+                    onChange={(e) => toggleFilter(e.target.value, setCategory)}
+                  />
+                  {cat}
+                </label>
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Subcategory Filter */}
-        <div className={`border border-gray-300 pl-5 py-3 my-5 ${showFilter ? "" : "hidden"} sm:block`}>
-          <p className="mb-3 text-sm font-medium">TYPE</p>
-          <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
-            {["Easy", "Medium", "Hard"].map((sub) => (
-              <label key={sub} className="flex gap-2">
-                <input
-                  className="w-3"
-                  type="checkbox"
-                  value={sub}
-                  onChange={(e) => toggleFilter(e.target.value, setSubCategory)}
-                />
-                {sub}
-              </label>
-            ))}
+          {/* Subcategory Filter */}
+          <div className="mb-4">
+            <p className="mb-3 text-sm font-semibold">DIFFICULTY</p>
+            <div className="flex flex-col gap-2 text-sm font-light text-gray-700 dark:text-gray-300">
+              {["Easy", "Medium", "Hard"].map((sub) => (
+                <label key={sub} className="flex gap-2 items-center">
+                  <input
+                    className="w-4 h-4"
+                    type="checkbox"
+                    value={sub}
+                    onChange={(e) => toggleFilter(e.target.value, setSubCategory)}
+                  />
+                  {sub}
+                </label>
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
       {/* Right Section */}
       <div className="flex-1">
-      <div className="flex justify-between text-base sm:text-2xl mb-4">
-  <Title text1="ALL" text2="COURSES" />
+        <div className="flex justify-between items-center mb-6">
+          <Title text1="ALL" text2="COURSES" />
 
-  {/* Sort Dropdown */}
-  <select
-    onChange={(e) => setSortType(e.target.value)}
-    className="border border-gray-300 text-sm px-2 py-1 focus:outline-none"
-  >
-    <option value="relevant">Sort by: Relevant</option>
-    <option value="low-high">Sort by: Low to High</option>
-    <option value="high-low">Sort by: High to Low</option>
-  </select>
-</div>
+          {/* Sort Dropdown */}
+          <select
+            onChange={(e) => setSortType(e.target.value)}
+            className={`border rounded-md px-4 py-2 text-sm focus:outline-none transition-colors ${
+              isDarkMode
+                ? "bg-gray-800 text-white border-gray-600"
+                : "bg-white text-black border-gray-300"
+            }`}
+          >
+            <option value="relevant">Sort by: Relevant</option>
+            <option value="low-high">Sort by: Low to High</option>
+            <option value="high-low">Sort by: High to Low</option>
+          </select>
+        </div>
 
         {/* Product Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8">
           {filterProducts.map((item) => (
             <ProductItem
-            key={item._id}
-            id={item._id}
-            image={item.image}
-            name={item.name}
-            price={item.price}
-          />
+              key={item._id}
+              id={item._id}
+              image={item.image}
+              name={item.name}
+              price={item.price}
+            />
           ))}
         </div>
       </div>
