@@ -19,6 +19,7 @@ import VoiceNavigation from './components/VoiceNavigation';
 import ChatBot from './components/ChatBot';
 import CustomCursor from './components/CustomCursor';
 import VideoCall from './components/VideoCall';
+import CourseDetails from './pages/CourseDetails';
 
 const App = () => {
   return (
@@ -38,6 +39,7 @@ const App = () => {
        <Route path="/orders" element={<Orders/>}/>
        <Route path="/place-order" element={<PlaceOrder/>}/>
        <Route path="/product/:productId" element={<Product />} />
+        <Route path="/course-details/:productId" element={<CourseDetails />} />
        <Route path="/verify" element={<Verify/>}/>
        <Route path="/videocall/:roomID" element={<VideoCall />} />
       </Routes>

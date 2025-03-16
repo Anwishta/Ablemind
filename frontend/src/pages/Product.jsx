@@ -1,20 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { ShopContext } from '../context/ShopContext';
 import { assets } from '../assets/assets';
 import RelatedProducts from '../components/RelatedProducts';
-import VideoLectures from "../components/VideoLectures";  // Import the component
-
-
-
+import VideoLectures from "../components/VideoLectures";  
 
 const Product = () => {
   const { productId } = useParams();
+  const navigate = useNavigate();
   const { products, currency, addToCart } = useContext(ShopContext);
-
   const [productData, setProductData] = useState(null);
   const [image, setImage] = useState('');
-  
 
   useEffect(() => {
     if (products.length > 0) {
@@ -33,16 +29,13 @@ const Product = () => {
   return (
     <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100">
       <div className="flex gap-12 sm:gap-12 flex-col sm:flex-row">
-        {/* -- Image Section -- */}
         <div className="flex-1">
           <img src={image} alt="Main Product" className="w-full h-auto" />
         </div>
 
-        {/* -- Product Info -- */}
         <div className="flex-1">
           <h1 className="font-medium text-2xl mt-2">{productData.name}</h1>
 
-          {/* Star Ratings */}
           <div className="flex items-center gap-1 mt-2">
             {[...Array(4)].map((_, index) => (
               <img key={index} src={assets.star_icon} alt="Star Icon" className="w-3.5" />
@@ -58,14 +51,20 @@ const Product = () => {
           <p className="my-5 text-gray-500 md:w-4/5">{productData.description}</p>
 
           <button
-            onClick={() => addToCart(productData._id, size)}
+            onClick={() => navigate(`/course-details/${productData._id}`)}
+            className="bg-black text-white px-8 py-3 mr-5 text-sm active:bg-gray-700"
+          >
+            READ MORE
+          </button>
+
+          <button
+            onClick={() => addToCart(productData._id)}
             className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700"
           >
             ADD TO CART
           </button>
 
           <hr className="mt-8 sm:w-4/5" />
-          
         </div>
       </div>
 
@@ -87,7 +86,6 @@ const Product = () => {
         </div>
       </div>
 
-      {/* Related Products */}
       <RelatedProducts category={productData.category} subCategory={productData.subCategory} />
     </div>
   );
