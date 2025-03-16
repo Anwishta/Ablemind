@@ -34,6 +34,7 @@
     "react-webcam": "^7.2.0",
     "regenerator-runtime": "^0.14.1",
     "socket.io-client": "^4.8.1",
+    "swiper": "^11.2.5",
     "zego-express-engine-webrtc": "^3.8.0"
   },
   "devDependencies": {
