@@ -37,11 +37,12 @@ const VideoCall = ({ roomID }) => {
     <div className="flex flex-col items-center justify-center mt-4 ">
       {!meetingStarted ? (
         <button
-          onClick={() => myMeeting(document.getElementById("video-container"))}
-          className="px-6 py-3 bg-black text-white rounded-full shadow-md hover:bg-blue-700"
-        >
-          📹 Start Video Call
-        </button>
+        onClick={() => myMeeting(document.getElementById("video-container"))}
+        className="px-6 py-3 bg-black text-white rounded-full shadow-md hover:bg-blue-700 hover:shadow-lg transform transition-all duration-300 ease-in-out hover:-translate-y-1"
+      >
+        Start Video Call
+      </button>
+      
       ) : (
         <div id="video-container" className="w-full h-full"></div>
       )}

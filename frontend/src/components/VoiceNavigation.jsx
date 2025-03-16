@@ -137,9 +137,10 @@ const VoiceNavigation = () => {
           {listening ? <MicOff size={24} /> : <Mic size={24} />}
         </button>
 
-        <p className="text-sm bg-gray-100 text-gray-800 p-2 rounded-md shadow-md w-60">
-          <strong>Transcript:</strong> {transcript || "Start speaking..."}
-        </p>
+        <p className="text-sm bg-gray-100 text-gray-800 dark:bg-white dark:text-black p-2 rounded-md shadow-md w-60">
+  <strong>Transcript:</strong> {transcript || "Start speaking..."}
+</p>
+
       </div>
 
       {courses.length > 0 && (

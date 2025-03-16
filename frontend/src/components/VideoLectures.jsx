@@ -47,7 +47,7 @@ const VideoLectures = () => {
       {videoList.length > 4 && (
         <button
           onClick={() => setShowAll(!showAll)}
-          className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+          className="mt-4 bg-black text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
         >
           {showAll ? "Show Less" : "Show More"}
         </button>

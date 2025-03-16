@@ -11,32 +11,33 @@ const OurPolicy = () => {
 
       {/* Policy Cards Section */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 text-center">
-        {/* Accessibility Commitment */}
-        <div className="bg-white dark:bg-gray-800 shadow-md p-6 rounded-lg transition-transform transform hover:scale-105">
-          <img src={assets.quality_icon} className="w-14 mx-auto mb-4" alt="Accessibility Icon" />
-          <h3 className="font-semibold text-lg text-gray-900 dark:text-white">Inclusive Learning</h3>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">
-            Designed for all abilities, ensuring <strong>barrier-free</strong> education.
-          </p>
-        </div>
-
-        {/* Flexible Learning */}
-        <div className="bg-white dark:bg-gray-800 shadow-md p-6 rounded-lg transition-transform transform hover:scale-105">
-          <img src={assets.exchange_icon} className="w-14 mx-auto mb-4" alt="Flexibility Icon" />
-          <h3 className="font-semibold text-lg text-gray-900 dark:text-white">Learn Anytime, Anywhere</h3>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">
-            Access courses <strong>24/7</strong> on any device at your convenience.
-          </p>
-        </div>
-
-        {/* Expert Support */}
-        <div className="bg-white dark:bg-gray-800 shadow-md p-6 rounded-lg transition-transform transform hover:scale-105">
-          <img src={assets.support_img} className="w-14 mx-auto mb-4" alt="Support Icon" />
-          <h3 className="font-semibold text-lg text-gray-900 dark:text-white">Expert Support</h3>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">
-            Dedicated mentors & <strong>round-the-clock</strong> assistance for your learning needs.
-          </p>
-        </div>
+        {[
+          {
+            icon: assets.quality_icon,
+            title: "Inclusive Learning",
+            description: "Designed for all abilities, ensuring barrier-free education."
+          },
+          {
+            icon: assets.exchange_icon,
+            title: "Learn Anytime, Anywhere",
+            description: "Access courses 24/7 on any device at your convenience."
+          },
+          {
+            icon: assets.support_img,
+            title: "Expert Support",
+            description: "Dedicated mentors & round-the-clock assistance for your learning needs."
+          }
+        ].map((item, index) => (
+          <div
+            key={index}
+            className="bg-white dark:bg-gray-800 shadow-md p-6 rounded-lg transition-all 
+            transform hover:-translate-y-2 hover:scale-105 hover:shadow-xl"
+          >
+            <img src={item.icon} className="w-14 mx-auto mb-4" alt={item.title} />
+            <h3 className="font-semibold text-lg text-gray-900 dark:text-white">{item.title}</h3>
+            <p className="text-gray-600 dark:text-gray-400 mt-2">{item.description}</p>
+          </div>
+        ))}
       </div>
     </div>
   );
