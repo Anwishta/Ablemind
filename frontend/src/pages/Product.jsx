@@ -8,7 +8,6 @@ import VideoLectures from "../components/VideoLectures";
 const Product = () => {
   const { productId } = useParams();
   const { products, currency, addToCart } = useContext(ShopContext);
-
   const [productData, setProductData] = useState(null);
   const [image, setImage] = useState('');
 
@@ -35,11 +34,9 @@ const Product = () => {
           <img src={image} alt="Main Product" className="w-full h-auto" />
         </div>
 
-        {/* -- Product Info -- */}
         <div className="flex-1">
           <h1 className="font-medium text-2xl mt-2">{productData.name}</h1>
 
-          {/* Star Ratings */}
           <div className="flex items-center gap-1 mt-2">
             {[...Array(4)].map((_, index) => (
               <img key={index} src={assets.star_icon} alt="Star Icon" className="w-3.5" />
@@ -54,7 +51,7 @@ const Product = () => {
           </p>
           <p className="my-5 text-gray-500 md:w-4/5">{productData.description}</p>
 
-          {/* ✅ FIXED ADD TO CART BUTTON */}
+          {/* ✅ ADD TO CART BUTTON (No Size Required) */}
           <button
             onClick={() => addToCart(productData._id)}
             className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700"
@@ -84,7 +81,6 @@ const Product = () => {
         </div>
       </div>
 
-      {/* Related Products */}
       <RelatedProducts category={productData.category} subCategory={productData.subCategory} />
     </div>
   );
