@@ -112,3 +112,36 @@ html, body {
 .dark .navbar .active {
   background-color: #333; /* Slightly different color for active links */
 }
+
+/* ✅ Dark Mode Placeholder Color Fix */
+.dark ::placeholder {
+  color: #fff !important;
+  opacity: 1; /* Ensures full visibility */
+}
+
+/* ✅ Ensure input fields still have white text in dark mode */
+.dark input,
+.dark textarea {
+  color: white; /* Keeps text inside inputs white */
+}
+
+/* ✅ Ensure better visibility when input is focused */
+.dark input:focus::placeholder,
+.dark textarea:focus::placeholder {
+  color: #fff !important;
+}
+
+/* ✅ Dark Mode Input Text & Placeholder Fix */
+.dark input,
+.dark textarea {
+  color: black !important; /* Ensure text inside inputs is black */
+}
+
+/* ✅ Ensure placeholder text also appears black */
+.dark ::placeholder {
+  color: black !important;
+  opacity: 1;
+}
+
+/* ✅ Change border on focus for better UX */
+

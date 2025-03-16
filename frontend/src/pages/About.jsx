@@ -10,9 +10,12 @@ const About = () => {
       
 
       {/* ✅ Enhanced Title Section */}
-      <div className="text-center mb-12">
-        <Title text1="ABOUT" text2="US" />
-      </div>
+      <div className="text-center mb-6 text-xl sm:text-2xl font-medium">
+  <Title text1="ABOUT" text2="US" />
+</div>
+
+
+
 
       {/* About Content Section */}
       <div className="my-16 flex flex-col md:flex-row gap-16 items-center">
@@ -52,29 +55,33 @@ const About = () => {
 
       {/* Additional Information Section */}
       <div className="flex flex-col md:flex-row text-sm mt-12 mb-20 gap-6">
-        {[
-          {
-            title: "📚 Inclusive Learning",
-            description: "Courses designed for all abilities, with accessibility at the core."
-          },
-          {
-            title: "🎯 Personalized Experience",
-            description: "Adaptive learning paths tailored to individual needs."
-          },
-          {
-            title: "🔬 Expert-Curated Content",
-            description: "High-quality, research-backed educational materials."
-          }
-        ].map((item, index) => (
-          <div
-            key={index}
-            className="border px-10 md:px-16 py-10 flex flex-col gap-5 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 bg-white dark:bg-gray-900 dark:text-white"
-          >
-            <h3 className="text-2xl font-semibold">{item.title}</h3>
-            <p className="text-gray-600 dark:text-gray-300 text-lg">{item.description}</p>
-          </div>
-        ))}
-      </div>
+  {[
+    {
+      title: "📚 Inclusive Learning",
+      description: "Courses designed for all abilities, with accessibility at the core."
+    },
+    {
+      title: "🎯 Personalized Experience",
+      description: "Adaptive learning paths tailored to individual needs."
+    },
+    {
+      title: "🔬 Expert-Curated Content",
+      description: "High-quality, research-backed educational materials."
+    }
+  ].map((item, index) => (
+    <div
+      key={index}
+      className="border px-10 md:px-16 py-10 flex flex-col gap-5 rounded-lg shadow-md bg-white 
+      dark:bg-gray-900 dark:text-white 
+      transform transition-all duration-300 
+      hover:-translate-y-2 hover:scale-105 hover:shadow-2xl"
+    >
+      <h3 className="text-2xl font-semibold">{item.title}</h3>
+      <p className="text-gray-600 dark:text-gray-300 text-lg">{item.description}</p>
+    </div>
+  ))}
+</div>
+
 
       {/* Newsletter Subscription */}
       <NewsLetterBox />

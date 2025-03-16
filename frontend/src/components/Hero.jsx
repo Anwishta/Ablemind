@@ -3,9 +3,17 @@ import { assets } from '../assets/assets';
 
 const Hero = () => {
     return (
-        <div className="flex flex-col sm:flex-row border border-gray-200 dark:border-gray-700 shadow-md rounded-lg overflow-hidden transition-all duration-300">
-            {/* Hero Left Side */}
-            <div className="w-full sm:w-1/2 flex items-center justify-center p-10 bg-white dark:bg-gray-900 transition-all duration-300">
+        <div 
+            className="flex flex-col sm:flex-row border border-gray-200 dark:border-gray-700 
+            shadow-md rounded-lg overflow-hidden transition-transform duration-300 
+            hover:scale-105 hover:shadow-lg"
+        >
+            {/* Hero Left Side (Text) */}
+            <div 
+                className="w-full sm:w-1/2 flex items-center justify-center p-10 
+                bg-white dark:bg-gray-900 transition-all duration-300 
+                animate-fade-left"
+            >
                 <div className="text-[#414141] dark:text-gray-200 space-y-4 max-w-md">
                     <div className="flex items-center gap-2">
                         <p className="w-8 md:w-11 h-[2px] bg-[#414141] dark:bg-gray-400"></p>
@@ -21,10 +29,13 @@ const Hero = () => {
                 </div>
             </div>
 
-            {/* Hero Right Side */}
-            <div className="w-full sm:w-1/2">
+            {/* Hero Right Side (Image) */}
+            <div 
+                className="w-full sm:w-1/2 overflow-hidden animate-fade-right"
+            >
                 <img
-                    className="w-full h-full object-cover shadow-md dark:shadow-gray-800 transition-all duration-300"
+                    className="w-full h-full object-cover shadow-md dark:shadow-gray-800 
+                    transition-transform duration-500 hover:scale-105"
                     src={assets.hero_img}
                     alt="Hero"
                 />

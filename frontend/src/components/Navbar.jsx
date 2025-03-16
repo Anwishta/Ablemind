@@ -15,7 +15,14 @@ const Navbar = ({ toggleCursor, toggleTheme }) => {
 
   const [isCursorEnabled, setIsCursorEnabled] = useState(false);
   const navigate = useNavigate();
-  const { setShowSearch, getCartCount, token, setToken, cartItems, setCartItems } = useContext(ShopContext);
+  const {
+    setShowSearch,
+    getCartCount,
+    token,
+    setToken,
+    cartItems,
+    setCartItems,
+  } = useContext(ShopContext);
 
   // ✅ Ensure Dark Mode is applied on reload
   useLayoutEffect(() => {
@@ -49,39 +56,52 @@ const Navbar = ({ toggleCursor, toggleTheme }) => {
   return (
     <div className="flex items-center justify-between py-5 font-medium transition-all duration-300">
       <Link to="/">
-        <img src={assets.logo} className="w-36" alt="Logo" aria-label="Website Logo" />
+        <img
+          src={assets.logo}
+          className="w-36"
+          alt="Logo"
+          aria-label="Website Logo"
+        />
       </Link>
 
       {/* ✅ Fix: Ensure proper text color for NavLinks */}
       <ul className="hidden sm:flex gap-5 text-sm">
-        <NavLink 
-          to="/" 
-          className={({ isActive }) => 
-            `flex flex-col items-center gap-1 ${isActive ? "border-b-2 border-gray-500 dark:border-white" : ""} ${isDarkMode ? "text-white" : "text-black"}`
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            `flex flex-col items-center gap-1 ${
+              isActive ? "border-b-2 border-gray-500 dark:border-white" : ""
+            } ${isDarkMode ? "text-white" : "text-black"}`
           }
         >
           <p>HOME</p>
         </NavLink>
-        <NavLink 
-          to="/collection" 
-          className={({ isActive }) => 
-            `flex flex-col items-center gap-1 ${isActive ? "border-b-2 border-gray-500 dark:border-white" : ""} ${isDarkMode ? "text-white" : "text-black"}`
+        <NavLink
+          to="/collection"
+          className={({ isActive }) =>
+            `flex flex-col items-center gap-1 ${
+              isActive ? "border-b-2 border-gray-500 dark:border-white" : ""
+            } ${isDarkMode ? "text-white" : "text-black"}`
           }
         >
           <p>COURSES</p>
         </NavLink>
-        <NavLink 
-          to="/about" 
-          className={({ isActive }) => 
-            `flex flex-col items-center gap-1 ${isActive ? "border-b-2 border-gray-500 dark:border-white" : ""} ${isDarkMode ? "text-white" : "text-black"}`
+        <NavLink
+          to="/about"
+          className={({ isActive }) =>
+            `flex flex-col items-center gap-1 ${
+              isActive ? "border-b-2 border-gray-500 dark:border-white" : ""
+            } ${isDarkMode ? "text-white" : "text-black"}`
           }
         >
           <p>ABOUT</p>
         </NavLink>
-        <NavLink 
-          to="/contact" 
-          className={({ isActive }) => 
-            `flex flex-col items-center gap-1 ${isActive ? "border-b-2 border-gray-500 dark:border-white" : ""} ${isDarkMode ? "text-white" : "text-black"}`
+        <NavLink
+          to="/contact"
+          className={({ isActive }) =>
+            `flex flex-col items-center gap-1 ${
+              isActive ? "border-b-2 border-gray-500 dark:border-white" : ""
+            } ${isDarkMode ? "text-white" : "text-black"}`
           }
         >
           <p>CONTACT</p>
@@ -119,11 +139,19 @@ const Navbar = ({ toggleCursor, toggleTheme }) => {
           {token && (
             <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4">
               <div className="flex flex-col gap-2 w-36 py-3 px-2 bg-slate-100 dark:bg-gray-800">
-                <p className="cursor-pointer hover:text-black dark:hover:text-white">My Profile</p>
-                <p onClick={() => navigate("/orders")} className="cursor-pointer hover:text-black dark:hover:text-white">
+                <p className="cursor-pointer hover:text-black dark:hover:text-white">
+                  My Profile
+                </p>
+                <p
+                  onClick={() => navigate("/orders")}
+                  className="cursor-pointer hover:text-black dark:hover:text-white"
+                >
                   Orders
                 </p>
-                <p onClick={logout} className="cursor-pointer hover:text-black dark:hover:text-white">
+                <p
+                  onClick={logout}
+                  className="cursor-pointer hover:text-black dark:hover:text-white"
+                >
                   Logout
                 </p>
               </div>
@@ -138,7 +166,7 @@ const Navbar = ({ toggleCursor, toggleTheme }) => {
             alt="Cart Icon"
             aria-label="Cart Icon"
           />
-          <p className="absolute right-[-5px] bottom-[-5px] w-4 text-center leading-4 bg-black dark:bg-white dark:text-black aspect-square rounded-full text-[8px]">
+          <p className="absolute right-[-5px] bottom-[-5px] w-4 text-center leading-4 bg-black text-white dark:bg-white dark:text-black aspect-square rounded-full text-[8px]">
             {getCartCount()}
           </p>
         </Link>
