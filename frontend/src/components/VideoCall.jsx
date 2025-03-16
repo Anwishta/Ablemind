@@ -38,7 +38,7 @@ const VideoCall = ({ roomID }) => {
       {!meetingStarted ? (
         <button
           onClick={() => myMeeting(document.getElementById("video-container"))}
-          className="px-6 py-3 bg-blue-600 text-white rounded-full shadow-md hover:bg-blue-700"
+          className="px-6 py-3 bg-black text-white rounded-full shadow-md hover:bg-blue-700"
         >
           📹 Start Video Call
         </button>
