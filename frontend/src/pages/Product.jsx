@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { ShopContext } from '../context/ShopContext';
 import { assets } from '../assets/assets';
 import RelatedProducts from '../components/RelatedProducts';
@@ -7,7 +7,6 @@ import VideoLectures from "../components/VideoLectures";
 
 const Product = () => {
   const { productId } = useParams();
-  const navigate = useNavigate();
   const { products, currency, addToCart } = useContext(ShopContext);
   const [productData, setProductData] = useState(null);
   const [image, setImage] = useState('');
@@ -29,6 +28,8 @@ const Product = () => {
   return (
     <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100">
       <div className="flex gap-12 sm:gap-12 flex-col sm:flex-row">
+        
+        {/* -- Image Section -- */}
         <div className="flex-1">
           <img src={image} alt="Main Product" className="w-full h-auto" />
         </div>
@@ -50,13 +51,7 @@ const Product = () => {
           </p>
           <p className="my-5 text-gray-500 md:w-4/5">{productData.description}</p>
 
-          <button
-            onClick={() => navigate(`/course-details/${productData._id}`)}
-            className="bg-black text-white px-8 py-3 mr-5 text-sm active:bg-gray-700"
-          >
-            READ MORE
-          </button>
-
+          {/* ✅ ADD TO CART BUTTON (No Size Required) */}
           <button
             onClick={() => addToCart(productData._id)}
             className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700"
