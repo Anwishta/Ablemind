@@ -11,6 +11,8 @@ const ShopContextProvider = (props) => {
     const [search, setSearch] = useState("");
     const [showSearch, setShowSearch] = useState(false);
     const [cartItems, setCartItems] = useState({});
+    const [token, setToken] = useState(localStorage.getItem("token") || ""); // Token management
+    const backendUrl = "http://localhost:8000"; // ✅ Define backend URL
     const navigate = useNavigate();
 
     const addToCart = async (itemId, size) => {
@@ -34,6 +36,7 @@ const ShopContextProvider = (props) => {
 
         setCartItems(cartData); // Update state with the modified cart data
     };
+
     const getCartCount = () => {
         let totalCount = 0;
         for (const items in cartItems) {
@@ -48,24 +51,23 @@ const ShopContextProvider = (props) => {
           }
         }
         return totalCount;
-      };
-      const updateQuantity = async (itemId, size, quantity) => {
-        let cartData = structuredClone(cartItems); // Clone the cartItems to avoid mutating the state directly
-        cartData[itemId][size] = quantity; // Update the quantity for the specified item and size
-        setCartItems(cartData); // Update the state with the modified cart data
-      };
-      
-      const getCartAmount =  () => {
+    };
+
+    const updateQuantity = async (itemId, size, quantity) => {
+        let cartData = structuredClone(cartItems);
+        cartData[itemId][size] = quantity;
+        setCartItems(cartData);
+    };
+
+    const getCartAmount =  () => {
         let totalAmount = 0;
-      
+
         for (const items in cartItems) {
-          // Find the product information from the products array
           let itemInfo = products.find((product) => product._id === items);
-      
+
           for (const item in cartItems[items]) {
             try {
               if (cartItems[items][item] > 0) {
-                // Add the product's price multiplied by its quantity to the total
                 totalAmount += itemInfo.price * cartItems[items][item];
               }
             } catch (error) {
@@ -73,12 +75,8 @@ const ShopContextProvider = (props) => {
             }
           }
         }
-      
         return totalAmount;
-      };
-      
-
-    
+    };
 
     const value = {
         products,
@@ -93,7 +91,10 @@ const ShopContextProvider = (props) => {
         getCartCount,
         updateQuantity,
         getCartAmount,
-        navigate
+        navigate,
+        backendUrl, // ✅ Add backend URL here
+        token,
+        setToken
     };
 
     return (

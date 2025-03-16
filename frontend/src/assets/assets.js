@@ -12,8 +12,8 @@ import p_img11 from './p_img11.png'
 import p_img12 from './p_img12.png'
 import p_img13 from './p_img13.png'
 import p_img14 from './p_img14.png'
-import p_vdo1  from './p_vdo1.mp4'
-import p_srt1 from './p_srt1.srt?url'
+// import p_vdo1  from './p_vdo1.mp4'
+// import p_srt1 from './p_srt1.srt?url'
 
 
 
@@ -58,8 +58,8 @@ export const assets = {
     stripe_logo,
     cross_icon,
     translate_icon,
-    p_srt1,
-    p_vdo1
+    // p_srt1,
+    // p_vdo1
     
 }
 

@@ -22,6 +22,8 @@ import ChatBot from "./components/ChatBot";
 import CustomCursor from "./components/CustomCursor";
 import VideoCall from "./components/VideoCall";
 import CourseDetails from "./pages/CourseDetails.jsx";
+import Whiteboard from "./pages/WhiteBoard.jsx";
+import ResumeBuilder from "./pages/ResumeBuilder.jsx";
 
 const App = () => {
   const [isCursorEnabled, setIsCursorEnabled] = useState(false);
@@ -63,6 +65,8 @@ const App = () => {
         <Route path="/course-details/:productId" element={<CourseDetails />} />
         <Route path="/verify" element={<Verify />} />
         <Route path="/videocall/:roomID" element={<VideoCall />} />
+        <Route path="/whiteboard" element={<Whiteboard />} />
+        <Route path="/resume-builder" element={<ResumeBuilder />} />
       </Routes>
       <ChatBot />
       <Footer />
