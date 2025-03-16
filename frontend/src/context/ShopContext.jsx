@@ -11,9 +11,11 @@ const ShopContextProvider = (props) => {
     const [search, setSearch] = useState("");
     const [showSearch, setShowSearch] = useState(false);
     const [cartItems, setCartItems] = useState({});
+    const [token, setToken] = useState(localStorage.getItem("token") || ""); // Token management
+    const backendUrl = "http://localhost:8000"; // ✅ Define backend URL
     const navigate = useNavigate();
 
-    // ✅ Fixed: Removed size logic from addToCart
+    // ✅ Add item to cart
     const addToCart = async (itemId) => {
         let cartData = { ...cartItems }; // Clone current cart items
 
@@ -27,6 +29,7 @@ const ShopContextProvider = (props) => {
         toast.success("Item added to cart!"); // Show success toast
     };
 
+    // ✅ Get total cart count
     const getCartCount = () => {
         let totalCount = 0;
         for (const itemId in cartItems) {
@@ -35,21 +38,26 @@ const ShopContextProvider = (props) => {
         return totalCount;
     };
 
-    // ✅ Fixed: Removed size logic from updateQuantity
-    const updateQuantity = (itemId, quantity) => {
+    // ✅ Update quantity of a cart item
+    const updateQuantity = async (itemId, quantity) => {
         let cartData = { ...cartItems };
-        if (quantity > 0) {
-            cartData[itemId] = quantity; // Update quantity
-        } else {
+        
+        if (quantity <= 0) {
             delete cartData[itemId]; // Remove item if quantity is 0
+        } else {
+            cartData[itemId] = quantity;
         }
+
         setCartItems(cartData);
     };
 
+    // ✅ Calculate total cart amount
     const getCartAmount = () => {
         let totalAmount = 0;
+
         for (const itemId in cartItems) {
             let itemInfo = products.find((product) => product._id === itemId);
+            
             if (itemInfo) {
                 totalAmount += itemInfo.price * cartItems[itemId];
             }
@@ -57,6 +65,7 @@ const ShopContextProvider = (props) => {
         return totalAmount;
     };
 
+    // ✅ Provide values to the context
     const value = {
         products,
         currency,
@@ -71,6 +80,9 @@ const ShopContextProvider = (props) => {
         updateQuantity,
         getCartAmount,
         navigate,
+        backendUrl,
+        token,
+        setToken
     };
 
     return (

@@ -8,7 +8,7 @@ const CustomCursor = ({ isCursorEnabled }) => {
 
   useEffect(() => {
     if (!isCursorEnabled) {
-      document.body.style.cursor = "auto"; // Restore default cursor
+      document.body.style.cursor = "auto"; 
       synth.cancel();
       return;
     }

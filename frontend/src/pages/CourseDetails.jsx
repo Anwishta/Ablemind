@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
-import { useParams } from 'react-router-dom';
-import { ShopContext } from '../context/ShopContext';
-import { Mic, MicOff } from 'lucide-react';
+import React, { useState, useEffect, useContext, useRef } from "react";
+import { useParams } from "react-router-dom";
+import { ShopContext } from "../context/ShopContext";
+import { Mic, MicOff } from "lucide-react";
+import Coin from "../components/Coin"; // Import Coin component
 
 const CourseDetails = () => {
   const { productId } = useParams();
@@ -9,6 +10,7 @@ const CourseDetails = () => {
   const [course, setCourse] = useState(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [showCoinModal, setShowCoinModal] = useState(false); // State for modal
   const speechRef = useRef(null);
   const textRef = useRef(null);
 
@@ -31,17 +33,23 @@ const CourseDetails = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (progress >= 100) {
+      setTimeout(() => setShowCoinModal(true), 1000); 
+    }
+  }, [progress]);
 
   if (!course) {
     return <div className="text-center mt-10">Loading Course Details...</div>;
   }
 
   const handleSpeech = () => {
-    if (!('speechSynthesis' in window)) {
-      alert('Your browser does not support text-to-speech.');
+    if (!("speechSynthesis" in window)) {
+      alert("Your browser does not support text-to-speech.");
       return;
     }
 
@@ -95,6 +103,7 @@ const CourseDetails = () => {
       <div className="flex flex-col items-center">
         <h1 className="font-medium text-3xl">{course.name}</h1>
         <p className="mt-3 text-xl text-gray-500">{course.category}</p>
+        {/* <img src={course.image} alt={course.name} className="mt-6" /> */}
 
         <div
           className="mt-6 flex flex-col items-center gap-4 p-4 bg-gray-100 rounded-lg shadow-sm w-4/5"
@@ -109,6 +118,8 @@ const CourseDetails = () => {
           </button>
         </div>
       </div>
+
+      {showCoinModal && <Coin onClose={() => setShowCoinModal(false)} />}
     </div>
   );
 };

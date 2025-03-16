@@ -1,7 +1,10 @@
-import React from 'react';
-import { assets } from '../assets/assets';
+import React from "react";
+import { assets } from "../assets/assets";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+    const navigate = useNavigate();
+
     return (
         <div 
             className="flex flex-col sm:flex-row border border-gray-200 dark:border-gray-700 
@@ -26,17 +29,33 @@ const Hero = () => {
                         <p className="font-semibold text-sm md:text-base">START NOW</p>
                         <p className="w-8 md:w-11 h-[2px] bg-[#414141] dark:bg-gray-400"></p>
                     </div>
+
+                    {/* ✅ Navigation Buttons (From main branch) */}
+                    <div className="mt-4 flex flex-col sm:flex-row gap-4">
+                        <button
+                            onClick={() => navigate("/whiteboard")}
+                            className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-full 
+                            shadow-md hover:bg-blue-700 transition duration-300"
+                        >
+                            Go to Whiteboard
+                        </button>
+                        <button
+                            onClick={() => navigate("/resume-builder")}
+                            className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-full 
+                            shadow-md hover:bg-blue-700 transition duration-300"
+                        >
+                            Build Resume
+                        </button>
+                    </div>
                 </div>
             </div>
 
             {/* Hero Right Side (Image) */}
-            <div 
-                className="w-full sm:w-1/2 overflow-hidden animate-fade-right"
-            >
+            <div className="w-full sm:w-1/2 overflow-hidden animate-fade-right">
                 <img
                     className="w-full h-full object-cover shadow-md dark:shadow-gray-800 
                     transition-transform duration-500 hover:scale-105"
-                    src={assets.hero_img}
+                    src={assets?.hero_img || "https://via.placeholder.com/600"} // Fallback image
                     alt="Hero"
                 />
             </div>
@@ -45,3 +64,4 @@ const Hero = () => {
 };
 
 export default Hero;
+

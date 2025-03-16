@@ -8,12 +8,7 @@ import SlideButton from "./SlideButton";
 import DarkModeToggle from "./DarkModeToggle";
 
 const Navbar = ({ toggleCursor, toggleTheme }) => {
-  // ✅ Get dark mode state from localStorage on first load
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    return localStorage.getItem("darkMode") === "true";
-  });
-
-  const [isCursorEnabled, setIsCursorEnabled] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => localStorage.getItem("darkMode") === "true");
   const navigate = useNavigate();
   const {
     setShowSearch,
@@ -24,13 +19,8 @@ const Navbar = ({ toggleCursor, toggleTheme }) => {
     setCartItems,
   } = useContext(ShopContext);
 
-  // ✅ Ensure Dark Mode is applied on reload
   useLayoutEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
+    document.documentElement.classList.toggle("dark", isDarkMode);
   }, [isDarkMode]);
 
   const logout = () => {
@@ -39,11 +29,6 @@ const Navbar = ({ toggleCursor, toggleTheme }) => {
     localStorage.removeItem("cart");
     setToken("");
     setCartItems({});
-  };
-
-  const handleCursorToggle = () => {
-    setIsCursorEnabled(!isCursorEnabled);
-    toggleCursor(!isCursorEnabled);
   };
 
   const handleDarkModeToggle = (newMode) => {
@@ -64,51 +49,26 @@ const Navbar = ({ toggleCursor, toggleTheme }) => {
         />
       </Link>
 
-      {/* ✅ Fix: Ensure proper text color for NavLinks */}
+      {/* 🔹 Navigation Links */}
       <ul className="hidden sm:flex gap-5 text-sm">
-        <NavLink
-          to="/"
-          className={({ isActive }) =>
-            `flex flex-col items-center gap-1 ${
-              isActive ? "border-b-2 border-gray-500 dark:border-white" : ""
-            } ${isDarkMode ? "text-white" : "text-black"}`
-          }
-        >
-          <p>HOME</p>
-        </NavLink>
-        <NavLink
-          to="/collection"
-          className={({ isActive }) =>
-            `flex flex-col items-center gap-1 ${
-              isActive ? "border-b-2 border-gray-500 dark:border-white" : ""
-            } ${isDarkMode ? "text-white" : "text-black"}`
-          }
-        >
-          <p>COURSES</p>
-        </NavLink>
-        <NavLink
-          to="/about"
-          className={({ isActive }) =>
-            `flex flex-col items-center gap-1 ${
-              isActive ? "border-b-2 border-gray-500 dark:border-white" : ""
-            } ${isDarkMode ? "text-white" : "text-black"}`
-          }
-        >
-          <p>ABOUT</p>
-        </NavLink>
-        <NavLink
-          to="/contact"
-          className={({ isActive }) =>
-            `flex flex-col items-center gap-1 ${
-              isActive ? "border-b-2 border-gray-500 dark:border-white" : ""
-            } ${isDarkMode ? "text-white" : "text-black"}`
-          }
-        >
-          <p>CONTACT</p>
-        </NavLink>
+        {["/", "/collection", "/about", "/contact"].map((path, index) => (
+          <NavLink
+            key={index}
+            to={path}
+            className={({ isActive }) =>
+              `flex flex-col items-center gap-1 ${
+                isActive ? "border-b-2 border-gray-500 dark:border-white" : ""
+              } ${isDarkMode ? "text-white" : "text-black"}`
+            }
+          >
+            <p>{path === "/" ? "HOME" : path.slice(1).toUpperCase()}</p>
+          </NavLink>
+        ))}
       </ul>
 
+      {/* 🔹 Right Side Icons */}
       <div className="flex items-center gap-6">
+        {/* Search Icon */}
         <img
           onClick={() => {
             navigate("/collection");
@@ -117,17 +77,21 @@ const Navbar = ({ toggleCursor, toggleTheme }) => {
           src={assets.search_icon}
           className="w-5 cursor-pointer"
           alt="Search Icon"
-          aria-label="Search Icon"
         />
 
-        {/* ✅ Dark Mode Toggle */}
+        {/* Dark Mode Toggle */}
         <DarkModeToggle onToggle={handleDarkModeToggle} />
+
+        {/* Google Translator */}
         <GoogleTranslator />
+
+        {/* Font Size Adjuster */}
         <FontSizeAdjuster isDarkMode={isDarkMode} />
 
         {/* 🔹 Cursor Toggle */}
-        <SlideButton onToggle={handleCursorToggle} />
+        <SlideButton onToggle={toggleCursor} />
 
+        {/* 🔹 Profile Dropdown */}
         <div className="group relative">
           <img
             onClick={() => (token ? null : navigate("/login"))}
@@ -139,9 +103,7 @@ const Navbar = ({ toggleCursor, toggleTheme }) => {
           {token && (
             <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4">
               <div className="flex flex-col gap-2 w-36 py-3 px-2 bg-slate-100 dark:bg-gray-800">
-                <p className="cursor-pointer hover:text-black dark:hover:text-white">
-                  My Profile
-                </p>
+                <p className="cursor-pointer hover:text-black dark:hover:text-white">My Profile</p>
                 <p
                   onClick={() => navigate("/orders")}
                   className="cursor-pointer hover:text-black dark:hover:text-white"
@@ -159,6 +121,7 @@ const Navbar = ({ toggleCursor, toggleTheme }) => {
           )}
         </div>
 
+        {/* 🔹 Cart Icon */}
         <Link to="/cart" className="relative">
           <img
             src={assets.cart_icon}
@@ -170,15 +133,6 @@ const Navbar = ({ toggleCursor, toggleTheme }) => {
             {getCartCount()}
           </p>
         </Link>
-
-        {/* Mobile Menu Button */}
-        <img
-          onClick={() => setVisible(true)}
-          src={assets.menu_icon}
-          className="w-5 cursor-pointer sm:hidden"
-          alt="Menu Icon"
-          aria-label="Menu Icon"
-        />
       </div>
     </div>
   );

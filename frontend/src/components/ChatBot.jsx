@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IoChatbubbleEllipses } from "react-icons/io5";
-import { Mic, MicOff } from "lucide-react"; // Microphone Icons
+import { Mic, MicOff } from "lucide-react"; 
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 import Style from "../css/chatbot.module.css";
 
