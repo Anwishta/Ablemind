@@ -4,9 +4,11 @@ import { ShopContext } from "../context/ShopContext";
 import { assets } from "../assets/assets";
 import GoogleTranslator from "./GoogleTranslator";
 import FontSizeAdjuster from "./FontSizeAdjuster";
+import SlideButton from "./SlideButton";
 
-const Navbar = () => {
+const Navbar = ({ toggleCursor }) => {
   const [visible, setVisible] = useState(false);
+  const [isCursorEnabled, setIsCursorEnabled] = useState(false);
   const navigate = useNavigate();
   const { setShowSearch, getCartCount, token, setToken, cartItems, setCartItems } = useContext(ShopContext);
 
@@ -31,6 +33,11 @@ const Navbar = () => {
     localStorage.removeItem("cart");
     setToken("");
     setCartItems({});
+  };
+
+  const handleCursorToggle = () => {
+    setIsCursorEnabled(!isCursorEnabled);
+    toggleCursor(!isCursorEnabled);
   };
 
   return (
@@ -68,6 +75,10 @@ const Navbar = () => {
 
         <GoogleTranslator />
         <FontSizeAdjuster />
+
+        {/* 🔹 Slider Cursor Toggle Button */}
+        <SlideButton onToggle={handleCursorToggle} />
+
 
         <div className="group relative">
           <img

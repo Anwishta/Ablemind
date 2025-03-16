@@ -20,7 +20,13 @@ const io = new Server(server, {
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors({ credentials: true, origin: 'http://localhost:5173' }));
+app.use(cors({
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'POST'],
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 
 const PORT = process.env.PORT || 8000;
 
@@ -48,9 +54,19 @@ io.on('connection', (socket) => {
 
 app.post('/translate-sign', async (req, res) => {
     try {
+        console.log("🔵 Received request:", req.body);
         const { signData } = req.body;
+
+        if (!signData) {
+            console.log("❌ Missing signData");
+            return res.status(400).json({ error: "Missing signData" });
+        }
+
         const response = await axios.post('https://api.signall.us/translate', { signData });
+
+        console.log("✅ API Response:", response.data);
         res.json({ translatedText: response.data.translation });
+
     } catch (error) {
         console.error('❌ Translation Error:', error.message);
         res.status(500).json({ error: 'Translation failed' });
