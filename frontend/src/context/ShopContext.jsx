@@ -15,40 +15,25 @@ const ShopContextProvider = (props) => {
     const backendUrl = "http://localhost:8000"; // ✅ Define backend URL
     const navigate = useNavigate();
 
-    const addToCart = async (itemId, size) => {
-        if (!size){
-            toast.error('Select Product Size');
-            return;
-        }
-
-        let cartData = structuredClone(cartItems); // Clone current cart items
+    // ✅ Fixed: Removed size logic from addToCart
+    const addToCart = async (itemId) => {
+        let cartData = { ...cartItems }; // Clone current cart items
 
         if (cartData[itemId]) {
-            if (cartData[itemId][size]) {
-                cartData[itemId][size] += 1; // Increment quantity for existing size
-            } else {
-                cartData[itemId][size] = 1; // Initialize quantity for new size
-            }
+            cartData[itemId] += 1; // Increment quantity for existing item
         } else {
-            cartData[itemId] = {}; // Initialize item object
-            cartData[itemId][size] = 1; // Set quantity for the first size
+            cartData[itemId] = 1; // Initialize quantity for new item
         }
 
         setCartItems(cartData); // Update state with the modified cart data
+        toast.success("Item added to cart!"); // Show success toast
     };
+
 
     const getCartCount = () => {
         let totalCount = 0;
-        for (const items in cartItems) {
-          for (const item in cartItems[items]) {
-            try {
-              if (cartItems[items][item] > 0) {
-                totalCount += cartItems[items][item];
-              }
-            } catch (error) {
-              console.error("Error calculating cart count:", error);
-            }
-          }
+        for (const itemId in cartItems) {
+            totalCount += cartItems[itemId]; // Count all items
         }
         return totalCount;
     };
@@ -76,6 +61,7 @@ const ShopContextProvider = (props) => {
           }
         }
         return totalAmount;
+    };
     };
 
     const value = {
@@ -105,3 +91,4 @@ const ShopContextProvider = (props) => {
 };
 
 export default ShopContextProvider;
+

@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
-import { useNavigate } from "react-router-dom"; // Ensure navigate works
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom"; // Ensure navigation works
 import { ShopContext } from "../context/ShopContext";
 import Title from "../components/Title";
 import { assets } from "../assets/assets";
@@ -14,18 +14,13 @@ const Cart = () => {
 
   useEffect(() => {
     if (products.length > 0) {
-      const tempData = [];
-      for (const items in cartItems) {
-        for (const item in cartItems[items]) {
-          if (cartItems[items][item] > 0) {
-            tempData.push({
-              _id: items,
-              size: item,
-              quantity: cartItems[items][item],
-            });
-          }
-        }
-      }
+      const tempData = Object.keys(cartItems)
+        .filter((productId) => cartItems[productId] > 0)
+        .map((productId) => ({
+          _id: productId,
+          quantity: cartItems[productId],
+        }));
+
       setCartData(tempData);
     }
   }, [cartItems, products]);
@@ -66,9 +61,6 @@ const Cart = () => {
                         {currency}
                         {productData.price}
                       </p>
-                      <p className="px-2 sm:px-3 sm:py-1 border bg-slate-50">
-                        {item.size}
-                      </p>
                     </div>
                   </div>
                 </div>
@@ -82,7 +74,7 @@ const Cart = () => {
                   onChange={(e) => {
                     const value = Number(e.target.value);
                     if (value > 0) {
-                      updateQuantity(item._id, item.size, value);
+                      updateQuantity(item._id, value);
                     }
                   }}
                 />
@@ -92,7 +84,7 @@ const Cart = () => {
                   className="w-4 mr-4 sm:w-5 cursor-pointer"
                   src={assets.bin_icon}
                   alt="Remove"
-                  onClick={() => updateQuantity(item._id, item.size, 0)}
+                  onClick={() => updateQuantity(item._id, 0)}
                 />
               </div>
             );

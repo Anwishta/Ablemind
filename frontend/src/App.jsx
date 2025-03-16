@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import socket from "./socket.js";  
+import socket from "./socket.js";
 
 import Cart from "./pages/Cart";
 import Collection from "./pages/Collection";
@@ -24,10 +24,19 @@ import VideoCall from "./components/VideoCall";
 import CourseDetails from "./pages/CourseDetails.jsx";
 import Whiteboard from "./pages/WhiteBoard.jsx";
 import ResumeBuilder from "./pages/ResumeBuilder.jsx";
+import DarkModeToggle from "./components/DarkModeToggle"; // 🌙 Import Dark Mode Toggle
 
 const App = () => {
   const [isCursorEnabled, setIsCursorEnabled] = useState(false);
+  const [isDark, setIsDark] = useState(false);
 
+  // ✅ Toggle dark mode
+  const toggleTheme = (newMode) => {
+    setIsDark(newMode);
+    document.body.classList.toggle("dark", newMode);
+  };
+
+  // ✅ Connect to socket.io
   useEffect(() => {
     socket.connect();
 
@@ -45,9 +54,10 @@ const App = () => {
   }, []);
 
   return (
-    <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
+    <div className={`px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] ${isDark ? "bg-black text-white" : "bg-white text-black"}`}>
+      
       <ToastContainer />
-      <Navbar toggleCursor={setIsCursorEnabled} />
+      <Navbar toggleCursor={setIsCursorEnabled} toggleTheme={toggleTheme} />
       <CustomCursor isCursorEnabled={isCursorEnabled} />
       <SearchBar />
       <VoiceNavigation />
@@ -68,7 +78,14 @@ const App = () => {
         <Route path="/whiteboard" element={<Whiteboard />} />
         <Route path="/resume-builder" element={<ResumeBuilder />} />
       </Routes>
+
       <ChatBot />
+
+     
+      
+        
+      
+
       <Footer />
     </div>
   );

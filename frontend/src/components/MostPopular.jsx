@@ -1,38 +1,99 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { ShopContext } from '../context/ShopContext';
-import Title from './Title';
-import ProductItem from './ProductItem';
+import React, { useEffect, useState, useContext, useRef } from "react";
+import { ShopContext } from "../context/ShopContext";
+import Title from "./Title";
+import ProductItem from "./ProductItem";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const MostPopular = () => {
-    const { products } = useContext(ShopContext);
-    const [bestSeller, setBestSeller] = useState([]);
+  const { products } = useContext(ShopContext);
+  const [bestSeller, setBestSeller] = useState([]);
+  
+  // Create refs for navigation buttons
+  const prevRef = useRef(null);
+  const nextRef = useRef(null);
 
-    useEffect(() => {
-        const bestProduct = products.filter((item) => item.bestseller);
-        setBestSeller(bestProduct.slice(0, 5));
-    }, [products]); // Add products as a dependency to ensure it updates when context changes
+  useEffect(() => {
+    const bestProduct = products.filter((item) => item.bestseller);
+    setBestSeller(bestProduct.slice(0, 10));
+  }, [products]);
 
-    return (
-        <div className='my-10'>
-            <div className='text-center text-3xl py-8'>
-                <Title text1={'MOST'} text2={'POPULAR'} />
-                <p className='w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600'>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis deleniti, ad fugiat sunt facere inventore adipisci cumque molestias eum quo, dignissimos nemo veritatis, quod mollitia atque asperiores fuga quisquam voluptate.
-                </p>
-            </div>
-            <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6'>
-                {bestSeller.map((item) => (
-                    <ProductItem
-                        key={item._id} // Unique key for React
-                        id={item._id} // Pass product ID as a prop
-                        image={item.image} // Pass image URL
-                        name={item.name} // Pass product name
-                        price={item.price} // Pass product price
-                    />
-                ))}
-            </div>
-        </div>
-    );
+  return (
+    <div className="relative my-16">
+      {/* Title Section */}
+      <div className="text-center text-3xl py-8">
+        <Title text1="MOST" text2="POPULAR" />
+        <p className="w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600">
+          Explore our top-rated courses, curated for an exceptional learning
+          experience.
+        </p>
+      </div>
+
+      {/* Swiper Carousel Container */}
+      <div className="relative max-w-7xl mx-auto">
+        {/* Left Arrow */}
+        {/* Left Arrow */}
+<button
+  ref={prevRef}
+  className="absolute top-[45%] left-[-85px] -translate-y-1/2 z-10 p-3 bg-gray-800 text-white shadow-md rounded-full transition-all duration-300 hover:bg-gray-700 hover:shadow-lg"
+>
+  <FaChevronLeft className="text-3xl" />
+</button>
+
+{/* Right Arrow */}
+<button
+  ref={nextRef}
+  className="absolute top-[45%] right-[-85px] -translate-y-1/2 z-10 p-3 bg-gray-800 text-white shadow-md rounded-full transition-all duration-300 hover:bg-gray-700 hover:shadow-lg"
+>
+  <FaChevronRight className="text-3xl" />
+</button>
+
+
+        {/* Swiper Carousel */}
+        <Swiper
+          modules={[Navigation, Pagination, Autoplay]}
+          spaceBetween={50}  // Increased spacing
+          slidesPerView={1}
+          breakpoints={{
+            640: { slidesPerView: 2, spaceBetween: 60 },
+            768: { slidesPerView: 3, spaceBetween: 70 },
+            1024: { slidesPerView: 4, spaceBetween: 80 },
+            1280: { slidesPerView: 5, spaceBetween: 90 },
+          }}
+          navigation={{
+            prevEl: prevRef.current,
+            nextEl: nextRef.current,
+          }}
+          pagination={{ clickable: true, dynamicBullets: true }}
+          autoplay={{ delay: 3000, disableOnInteraction: false }}
+          className="px-6"
+          onInit={(swiper) => {
+            swiper.params.navigation.prevEl = prevRef.current;
+            swiper.params.navigation.nextEl = nextRef.current;
+            swiper.navigation.init();
+            swiper.navigation.update();
+          }}
+        >
+          {bestSeller.map((item) => (
+            <SwiperSlide key={item._id} className="flex justify-center">
+              <div className="w-full max-w-[270px] sm:max-w-[300px] md:max-w-[330px] hover:scale-105 transition-transform duration-300">
+                <ProductItem
+                  id={item._id}
+                  image={item.image}
+                  name={item.name}
+                  price={item.price}
+                />
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    </div>
+  );
 };
 
-export default MostPopular;
+export default MostPopular; 

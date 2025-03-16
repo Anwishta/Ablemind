@@ -2,41 +2,44 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-a.active hr{
-    display:block
-} 
 
-*{
-    font-family: Outfit;
+a.active hr {
+  display: block;
 }
+
+* {
+  font-family: Outfit;
+}
+
 .prata-regular {
-    font-family: "Prata", serif;
-    font-weight: 400;
-    font-style: normal;
-  }
+  font-family: "Prata", serif;
+  font-weight: 400;
+  font-style: normal;
+}
 
-  @media(max-width:640px){
-  a.active{
+@media (max-width: 640px) {
+  a.active {
     background-color: black;
-    color:white;
-
+    color: white;
   }
 }
+
+/* Global Font Size */
 :root {
-  --global-font-size: 16px; /* Default font size */
+  --global-font-size: 16px;
 }
 
 html, body {
-  font-size: var(--global-font-size) !important; /* Ensure override */
-  transition: font-size 0.3s ease-in-out; /* Smooth transition */
+  font-size: var(--global-font-size) !important;
+  transition: font-size 0.3s ease-in-out;
 }
 
 h1, h2, h3, h4, h5, h6, p, a, span, li, button {
-  font-size: inherit; /* Ensure all elements inherit */
+  font-size: inherit;
 }
 
+/* Button Styles */
 .btn {
-  /* background-color: #007bff; */
   color: black;
   border: none;
   padding: 5px 5px;
@@ -46,6 +49,66 @@ h1, h2, h3, h4, h5, h6, p, a, span, li, button {
   font-weight: bold;
 }
 
-/* .btn:hover {
-  background-color: #0056b3;
-} */
+/* Light Mode (Default) */
+html, body {
+  background-color: white;
+  color: black;
+  transition: background-color 0.3s ease, color 0.3s ease, font-size 0.3s ease-in-out;
+}
+
+/* ✅ Dark Mode - Apply Global Text Colors */
+.dark {
+  background-color: #121212;
+  color: white;
+}
+
+/* Ensure all text elements get white color in dark mode */
+.dark h1, 
+.dark h2, 
+.dark h3, 
+.dark h4, 
+.dark h5, 
+.dark h6, 
+.dark p, 
+.dark a, 
+.dark span, 
+.dark li, 
+.dark button, 
+.dark label, 
+.dark input, 
+.dark textarea {
+  color: white;
+}
+
+/* Buttons in dark mode */
+.dark .btn {
+  color: white;
+  background-color: #333;
+}
+
+.dark button {
+  background-color: white;
+  color: black;
+}
+
+.dark button:active {
+  background-color: gray;
+}
+
+/* ✅ Navbar Styles in Dark Mode */
+.dark .navbar {
+  background-color: #1a1a1a; /* Dark background */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
+}
+
+.dark .navbar a {
+  color: white;
+}
+
+.dark .navbar a:hover {
+  color: #bbbbbb; /* Softer hover effect */
+}
+
+.dark .navbar .active {
+  background-color: #333; /* Slightly different color for active links */
+}
