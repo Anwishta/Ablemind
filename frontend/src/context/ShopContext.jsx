@@ -15,7 +15,7 @@ const ShopContextProvider = (props) => {
     const backendUrl = "http://localhost:8000"; // ✅ Define backend URL
     const navigate = useNavigate();
 
-    // ✅ Fixed: Removed size logic from addToCart
+    // ✅ Add item to cart
     const addToCart = async (itemId) => {
         let cartData = { ...cartItems }; // Clone current cart items
 
@@ -29,7 +29,7 @@ const ShopContextProvider = (props) => {
         toast.success("Item added to cart!"); // Show success toast
     };
 
-
+    // ✅ Get total cart count
     const getCartCount = () => {
         let totalCount = 0;
         for (const itemId in cartItems) {
@@ -38,32 +38,34 @@ const ShopContextProvider = (props) => {
         return totalCount;
     };
 
-    const updateQuantity = async (itemId, size, quantity) => {
-        let cartData = structuredClone(cartItems);
-        cartData[itemId][size] = quantity;
+    // ✅ Update quantity of a cart item
+    const updateQuantity = async (itemId, quantity) => {
+        let cartData = { ...cartItems };
+        
+        if (quantity <= 0) {
+            delete cartData[itemId]; // Remove item if quantity is 0
+        } else {
+            cartData[itemId] = quantity;
+        }
+
         setCartItems(cartData);
     };
 
-    const getCartAmount =  () => {
+    // ✅ Calculate total cart amount
+    const getCartAmount = () => {
         let totalAmount = 0;
 
-        for (const items in cartItems) {
-          let itemInfo = products.find((product) => product._id === items);
-
-          for (const item in cartItems[items]) {
-            try {
-              if (cartItems[items][item] > 0) {
-                totalAmount += itemInfo.price * cartItems[items][item];
-              }
-            } catch (error) {
-              console.error("Error calculating cart amount:", error);
+        for (const itemId in cartItems) {
+            let itemInfo = products.find((product) => product._id === itemId);
+            
+            if (itemInfo) {
+                totalAmount += itemInfo.price * cartItems[itemId];
             }
-          }
         }
         return totalAmount;
     };
-    };
 
+    // ✅ Provide values to the context
     const value = {
         products,
         currency,
@@ -78,7 +80,7 @@ const ShopContextProvider = (props) => {
         updateQuantity,
         getCartAmount,
         navigate,
-        backendUrl, // ✅ Add backend URL here
+        backendUrl,
         token,
         setToken
     };
@@ -91,4 +93,3 @@ const ShopContextProvider = (props) => {
 };
 
 export default ShopContextProvider;
-

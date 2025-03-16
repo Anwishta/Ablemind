@@ -19,24 +19,22 @@ import "react-toastify/dist/ReactToastify.css";
 import Verify from "./pages/Verify";
 import VoiceNavigation from "./components/VoiceNavigation";
 import ChatBot from "./components/ChatBot";
-import CustomCursor from "./components/CustomCursor";
+import CustomCursor from "./components/CustomCursor"; 
+import Canvas from "./Utils/Canvas"; 
 import VideoCall from "./components/VideoCall";
 import CourseDetails from "./pages/CourseDetails.jsx";
 import Whiteboard from "./pages/WhiteBoard.jsx";
 import ResumeBuilder from "./pages/ResumeBuilder.jsx";
-import DarkModeToggle from "./components/DarkModeToggle"; // 🌙 Import Dark Mode Toggle
 
 const App = () => {
-  const [isCursorEnabled, setIsCursorEnabled] = useState(false);
+  const [isTtsCursor, setIsTtsCursor] = useState(false); 
   const [isDark, setIsDark] = useState(false);
 
-  // ✅ Toggle dark mode
   const toggleTheme = (newMode) => {
     setIsDark(newMode);
     document.body.classList.toggle("dark", newMode);
   };
 
-  // ✅ Connect to socket.io
   useEffect(() => {
     socket.connect();
 
@@ -57,8 +55,11 @@ const App = () => {
     <div className={`px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] ${isDark ? "bg-black text-white" : "bg-white text-black"}`}>
       
       <ToastContainer />
-      <Navbar toggleCursor={setIsCursorEnabled} toggleTheme={toggleTheme} />
-      <CustomCursor isCursorEnabled={isCursorEnabled} />
+      <Navbar toggleCursor={setIsTtsCursor} toggleTheme={toggleTheme} />
+
+      {!isTtsCursor && <Canvas />}
+      {isTtsCursor && <CustomCursor isCursorEnabled={isTtsCursor} />}
+
       <SearchBar />
       <VoiceNavigation />
 
@@ -80,11 +81,6 @@ const App = () => {
       </Routes>
 
       <ChatBot />
-
-     
-      
-        
-      
 
       <Footer />
     </div>

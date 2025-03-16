@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom'; // ✅ Import useNavigate
 import { ShopContext } from '../context/ShopContext';
 import { assets } from '../assets/assets';
 import RelatedProducts from '../components/RelatedProducts';
@@ -7,6 +7,7 @@ import VideoLectures from "../components/VideoLectures";
 
 const Product = () => {
   const { productId } = useParams();
+  const navigate = useNavigate(); // ✅ Initialize useNavigate
   const { products, currency, addToCart } = useContext(ShopContext);
   const [productData, setProductData] = useState(null);
   const [image, setImage] = useState('');
@@ -57,6 +58,14 @@ const Product = () => {
             className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700"
           >
             ADD TO CART
+          </button>
+
+          {/* ✅ LOAD MORE BUTTON - Navigates to Course Details */}
+          <button
+            onClick={() => navigate(`/course-details/${productId}`)} // ✅ Navigate to Course Details
+            className="bg-black text-white px-8 py-3 text-sm ml-4 hover:bg-blue-700 transition duration-300"
+          >
+            LOAD MORE
           </button>
 
           <hr className="mt-8 sm:w-4/5" />
