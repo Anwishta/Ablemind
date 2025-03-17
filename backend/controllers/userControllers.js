@@ -82,8 +82,21 @@ const registerUser = async (req, res) => {
     
 };
 
-// Route for admin login
+const getCurrentUserProfile = async (req, res) => {
+    const user = await userModel.findById(req.user._id);
+  
+    if (user) {
+      res.json({
+        _id: user._id,
+        username: user.username,
+        email: user.email,
+      });
+    } else {
+      res.status(400);
+      throw new Error("User not found");
+    }
 
+};
 
 const adminLogin = async (req, res) => {
     try {
@@ -105,4 +118,4 @@ const adminLogin = async (req, res) => {
 
 
 
-export { loginUser, registerUser, adminLogin };
+export { loginUser, registerUser, adminLogin, getCurrentUserProfile };

@@ -94,7 +94,7 @@ const Navbar = ({ toggleCursor, toggleTheme }) => {
         {/* 🔹 Profile Dropdown */}
         <div className="group relative">
           <img
-            onClick={() => (token ? null : navigate("/login"))}
+            onClick={() => (token ? navigate("/profile") : navigate("/login"))}
             src={assets.profile_icon}
             className="w-5 cursor-pointer"
             alt="Profile Icon"

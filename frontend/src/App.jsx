@@ -25,6 +25,7 @@ import VideoCall from "./components/VideoCall";
 import CourseDetails from "./pages/CourseDetails.jsx";
 import Whiteboard from "./pages/WhiteBoard.jsx";
 import ResumeBuilder from "./pages/ResumeBuilder.jsx";
+import Profile from "./pages/Profile.jsx";
 
 const App = () => {
   const [isTtsCursor, setIsTtsCursor] = useState(false); 
@@ -78,6 +79,8 @@ const App = () => {
         <Route path="/videocall/:roomID" element={<VideoCall />} />
         <Route path="/whiteboard" element={<Whiteboard />} />
         <Route path="/resume-builder" element={<ResumeBuilder />} />
+        <Route path="/profile" element={<Profile />} />
+
       </Routes>
 
       <ChatBot />
