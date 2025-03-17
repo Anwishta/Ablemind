@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
-import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
 import { useNavigate } from "react-router-dom";
-import { products } from "../assets/assets"; 
-import ProductItem from "../components/ProductItem"; 
-import { Mic, MicOff } from "lucide-react"; 
+import { products } from "../assets/assets";
+import ProductItem from "../components/ProductItem";
+import { Mic, MicOff } from "lucide-react";
 
 const VoiceNavigation = () => {
   const navigate = useNavigate();
-  const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition,
+  } = useSpeechRecognition();
   const [awaitingResponse, setAwaitingResponse] = useState(false);
   const [courses, setCourses] = useState([]);
   const [currentCategory, setCurrentCategory] = useState("");
@@ -17,7 +24,7 @@ const VoiceNavigation = () => {
     home: "/",
     about: "/about",
     cart: "/cart",
-    collection: "/collection",
+    courses: "/courses",
     contact: "/contact",
     login: "/login",
     orders: "/orders",
@@ -45,21 +52,23 @@ const VoiceNavigation = () => {
   };
 
   const fetchCourses = (category) => {
-    setCourses([]); 
+    setCourses([]);
     setCurrentCategory(category);
     setCurrentIndex(0);
     speak(`Fetching ${category} courses for you...`);
-    
-    const filteredCourses = products.filter((course) => 
-      course.category.toLowerCase() === category.toLowerCase()
+
+    const filteredCourses = products.filter(
+      (course) => course.category.toLowerCase() === category.toLowerCase()
     );
-  
+
     if (filteredCourses.length > 0) {
       setCourses(filteredCourses);
       setTimeout(() => {
-        speak(`I found some ${category} courses. Do you want me to read the headlines for you?`);
+        speak(
+          `I found some ${category} courses. Do you want me to read the headlines for you?`
+        );
         setAwaitingResponse(true);
-      }, 1000); 
+      }, 1000);
     } else {
       speak(`Sorry, no courses found for ${category}.`);
     }
@@ -93,7 +102,7 @@ const VoiceNavigation = () => {
 
     Object.keys(courseCategories).forEach((categoryKey) => {
       if (
-        command.includes(`recommend some courses for ${categoryKey}`) || 
+        command.includes(`recommend some courses for ${categoryKey}`) ||
         command.includes(`fetch some courses for ${categoryKey}`)
       ) {
         fetchCourses(courseCategories[categoryKey]);
@@ -128,28 +137,44 @@ const VoiceNavigation = () => {
     <div className="relative">
       <div className="fixed left-4 bottom-4 transform -translate-y-1/2 flex items-center space-x-3 p-3 text-white rounded-lg shadow-lg">
         <button
-          onClick={() => listening ? SpeechRecognition.stopListening() : SpeechRecognition.startListening({ continuous: true })}
+          onClick={() =>
+            listening
+              ? SpeechRecognition.stopListening()
+              : SpeechRecognition.startListening({ continuous: true })
+          }
           className={`w-12 h-12 flex items-center justify-center rounded-full 
             transition-all duration-300 shadow-md hover:shadow-lg 
-            ${listening ? "bg-red-500 text-white animate-pulse" : "bg-blue-500 text-white"}
+            ${
+              listening
+                ? "bg-red-500 text-white animate-pulse"
+                : "bg-blue-500 text-white"
+            }
           `}
         >
           {listening ? <MicOff size={24} /> : <Mic size={24} />}
         </button>
 
         <p className="text-sm bg-gray-100 text-gray-800 dark:bg-white dark:text-black p-2 rounded-md shadow-md w-60">
-  <strong>Transcript:</strong> {transcript || "Start speaking..."}
-</p>
-
+          <strong>Transcript:</strong> {transcript || "Start speaking..."}
+        </p>
       </div>
 
       {courses.length > 0 && (
-        <div className="mt-4 p-6 bg-white shadow-lg rounded-lg">
-          <h3 className="font-semibold text-lg">Recommended {currentCategory} Courses:</h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-4"> 
+        <div className="mt-4 p-6 bg-white shadow-lg rounded-lg relative">
+          <button
+            onClick={() => setCourses([])}
+            className="absolute top-2 right-2 bg-black text-white px-2 py-1 rounded-full text-sm hover:bg-gray-800 transition"
+          >
+            ✖
+          </button>
+
+          <h3 className="font-semibold text-lg">
+            Recommended {currentCategory} Courses:
+          </h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-4">
             {courses.slice(currentIndex, currentIndex + 5).map((item) => (
               <ProductItem
-                key={item._id} 
+                key={item._id}
                 id={item._id}
                 image={item.image}
                 name={item.name}
@@ -164,4 +189,3 @@ const VoiceNavigation = () => {
 };
 
 export default VoiceNavigation;
-
