@@ -5,6 +5,10 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import connectDB from './config/db.js';
+import userRoutes from './routes/userRoutes.js';
+import productRoute from './routes/productRoute.js';
+import cartRoute from './routes/cartRoute.js';
+import resumeRoute from './routes/resumeRoutes.js';
 
 dotenv.config();
 const app = express();
@@ -20,19 +24,22 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 app.use(express.json());
 app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
+app.use('/api/user', userRoutes);
+app.use('/api/resume', resumeRoute);
+app.use('/api/product', productRoute);
+app.use('/api/cart', cartRoute);
 
 app.post("/generate-drawing", async (req, res) => {
   const { prompt } = req.body;
-  
+
   try {
-    const model = gemini.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     const response = await model.generateContent(prompt);
+    
+    console.log("Full AI Response:", response);
 
-    console.log("Full AI Response:", response); 
-
-    const imageUrl = response.candidates?.[0]?.content?.imageUrl;
+    // Modify this according to Gemini's actual image response structure
+    const imageUrl = response.text(); 
 
     if (!imageUrl) {
       return res.status(500).json({ error: "No image URL found in AI response" });

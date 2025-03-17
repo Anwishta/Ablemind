@@ -143,5 +143,15 @@ html, body {
   opacity: 1;
 }
 
+.navbar-links {
+  @apply text-black; /* Light mode text always black */
+}
+
+/* Dark mode text resets to black after reload */
+.dark .navbar-links {
+  @apply text-black;
+}
+
+
 /* ✅ Change border on focus for better UX */
 

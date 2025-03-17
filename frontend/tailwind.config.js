@@ -6,7 +6,11 @@ export default {
   ],
   darkMode: 'class',  // ✅ Enable dark mode using the 'class' strategy
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        lightText: "#000", // White text in light mode
+      },
+    },
   },
   plugins: [],
 }

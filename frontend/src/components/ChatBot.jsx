@@ -25,7 +25,9 @@ const ChatBot = ({ isVoiceNavListening, stopVoiceNavListening }) => {
     <>
       <div className={Style.chatBot} ref={menuRef}>
         <div className={Style.chatWrapper} onClick={() => setOpen(!open)}>
-          <IoChatbubbleEllipses className={Style.icon} />
+          {/* Adding alt text for cursor to read */}
+          <span className="sr-only">Chatbot Icon</span>
+          <IoChatbubbleEllipses className={Style.icon} alt="Chatbot Icon" />
         </div>
 
         <div className={`${Style.dropDownMenu} ${open ? Style.active : Style.inactive}`}>
