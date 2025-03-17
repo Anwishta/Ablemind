@@ -14,7 +14,9 @@ const Collection = ({ isDarkMode }) => {
 
   const toggleFilter = (value, stateSetter) => {
     stateSetter((prev) =>
-      prev.includes(value) ? prev.filter((item) => item !== value) : [...prev, value]
+      prev.includes(value)
+        ? prev.filter((item) => item !== value)
+        : [...prev, value]
     );
   };
 
@@ -28,11 +30,15 @@ const Collection = ({ isDarkMode }) => {
     }
 
     if (category.length > 0) {
-      productsCopy = productsCopy.filter((item) => category.includes(item.category));
+      productsCopy = productsCopy.filter((item) =>
+        category.includes(item.category)
+      );
     }
 
     if (subCategory.length > 0) {
-      productsCopy = productsCopy.filter((item) => subCategory.includes(item.subCategory));
+      productsCopy = productsCopy.filter((item) =>
+        subCategory.includes(item.subCategory)
+      );
     }
 
     switch (sortType) {
@@ -72,7 +78,7 @@ const Collection = ({ isDarkMode }) => {
         </p>
 
         <div
-          className={`border  p-4 rounded-lg shadow-md bg-white dark:bg-gray-800 transition-all ${
+          className={`border p-4 rounded-lg shadow-md bg-white dark:bg-gray-800 transition-all ${
             showFilter ? "" : "hidden"
           } sm:block`}
         >
@@ -104,7 +110,9 @@ const Collection = ({ isDarkMode }) => {
                     className="w-4 h-4"
                     type="checkbox"
                     value={sub}
-                    onChange={(e) => toggleFilter(e.target.value, setSubCategory)}
+                    onChange={(e) =>
+                      toggleFilter(e.target.value, setSubCategory)
+                    }
                   />
                   {sub}
                 </label>
@@ -117,7 +125,9 @@ const Collection = ({ isDarkMode }) => {
       {/* Right Section */}
       <div className="flex-1">
         <div className="flex justify-between items-center mb-6">
-          <Title text1="ALL" text2="COURSES" />
+          <div className="text-center mb-6 text-xl sm:text-2xl font-medium">
+            <Title text1="ALL" text2="COURSES" />
+          </div>
 
           {/* Sort Dropdown */}
           <select
@@ -135,7 +145,7 @@ const Collection = ({ isDarkMode }) => {
         </div>
 
         {/* Product Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
           {filterProducts.map((item) => (
             <ProductItem
               key={item._id}
