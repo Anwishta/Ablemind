@@ -11,7 +11,7 @@ const SearchBar = () => {
 
   useEffect(() => {
     // Check if the current path includes 'collection'
-    if (location.pathname.includes('collection')) {
+    if (location.pathname.includes('courses')) {
       setVisible(true);
     } else {
       setVisible(false);

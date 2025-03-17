@@ -2,16 +2,23 @@ import React, { useEffect, useState } from "react";
 
 const CustomCursor = ({ isCursorEnabled }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [hoveredWord, setHoveredWord] = useState(null);
+  const [hoveredText, setHoveredText] = useState(null);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const synth = window.speechSynthesis;
   let animationFrameId = null;
 
   useEffect(() => {
     if (!isCursorEnabled) {
-      document.body.style.cursor = "auto"; 
+      document.body.style.cursor = "auto";
       synth.cancel();
       return;
     }
+
+    // Check dark mode on mount and changes
+    const updateDarkMode = () => {
+      setIsDarkMode(document.documentElement.classList.contains("dark"));
+    };
+    updateDarkMode();
 
     const handleMouseMove = (e) => {
       if (animationFrameId) cancelAnimationFrame(animationFrameId);
@@ -19,34 +26,29 @@ const CustomCursor = ({ isCursorEnabled }) => {
       animationFrameId = requestAnimationFrame(() => {
         setPosition({ x: e.clientX, y: e.clientY });
 
-        // Get the element under the cursor
         const hoveredElement = document.elementFromPoint(e.clientX, e.clientY);
         let textToRead = "";
 
         if (hoveredElement) {
           if (hoveredElement.tagName === "IMG" && hoveredElement.alt) {
             textToRead = hoveredElement.alt; // Read image alt text
-          } else {
-            const range = getRangeFromPoint(e.clientX, e.clientY);
-            if (range) {
-              textToRead = getHoveredWord(hoveredElement.textContent.trim(), range.startOffset);
-            }
+          } else if (hoveredElement.tagName === "P" || hoveredElement.tagName === "DIV") {
+            textToRead = hoveredElement.textContent.trim(); // Read full paragraph or div content
           }
         }
 
-        // Speak only full words (ignore letters/symbols)
-        if (textToRead && textToRead !== hoveredWord && textToRead.length > 2) {
-          setHoveredWord(textToRead);
-          setTimeout(() => speakWord(textToRead), 200);
+        if (textToRead && textToRead !== hoveredText) {
+          setHoveredText(textToRead);
+          setTimeout(() => speakText(textToRead), 200);
         } else if (!textToRead) {
-          setHoveredWord(null);
+          setHoveredText(null);
           synth.cancel();
         }
       });
     };
 
     const handleMouseLeave = () => {
-      setHoveredWord(null);
+      setHoveredText(null);
       synth.cancel();
     };
 
@@ -54,47 +56,21 @@ const CustomCursor = ({ isCursorEnabled }) => {
     document.addEventListener("mouseleave", handleMouseLeave);
     document.body.style.cursor = "none";
 
+    const observer = new MutationObserver(updateDarkMode);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+
     return () => {
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseleave", handleMouseLeave);
       document.body.style.cursor = "auto";
       if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      observer.disconnect();
     };
-  }, [hoveredWord, isCursorEnabled]);
+  }, [hoveredText, isCursorEnabled]);
 
-  // Get the text at the cursor position
-  const getRangeFromPoint = (x, y) => {
-    if (document.caretRangeFromPoint) {
-      return document.caretRangeFromPoint(x, y);
-    } else if (document.caretPositionFromPoint) {
-      const pos = document.caretPositionFromPoint(x, y);
-      const range = document.createRange();
-      range.setStart(pos.offsetNode, pos.offset);
-      range.setEnd(pos.offsetNode, pos.offset);
-      return range;
-    }
-    return null;
-  };
-
-  // Improved word extraction: Ignore symbols, single letters, numbers
-  const getHoveredWord = (text, offset) => {
-    if (!text) return null;
-    
-    const words = text.match(/\b[a-zA-Z]{3,}\b/g); // Extract only real words (min 3 letters)
-    if (!words) return null;
-
-    let charCount = 0;
-    for (let word of words) {
-      charCount += word.length + 1; // +1 for space
-      if (charCount > offset) return word;
-    }
-
-    return null;
-  };
-
-  const speakWord = (word) => {
+  const speakText = (text) => {
     if (synth.speaking) synth.cancel();
-    const utterance = new SpeechSynthesisUtterance(word);
+    const utterance = new SpeechSynthesisUtterance(text);
     synth.speak(utterance);
   };
 
@@ -102,9 +78,10 @@ const CustomCursor = ({ isCursorEnabled }) => {
 
   return (
     <div
-      className="fixed top-0 left-0 w-6 h-6 bg-black rounded-full pointer-events-none transition-transform duration-200 ease-out scale-125"
+      className="fixed top-0 left-0 w-6 h-6 rounded-full pointer-events-none transition-transform duration-200 ease-out scale-125"
       style={{
         transform: `translate(${position.x}px, ${position.y}px)`,
+        backgroundColor: isDarkMode ? "white" : "black",
       }}
     ></div>
   );

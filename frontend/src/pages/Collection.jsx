@@ -62,7 +62,7 @@ const Collection = ({ isDarkMode }) => {
   return (
     <div className="flex flex-col sm:flex-row gap-10 pt-10 border-t">
       {/* Filter Section */}
-      <div className="w-full sm:w-60">
+      <div  className="readable-area w-full sm:w-60">
         <p
           onClick={() => setShowFilter(!showFilter)}
           className="my-2 text-xl flex items-center cursor-pointer gap-2"
