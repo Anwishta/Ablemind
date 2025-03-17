@@ -34,14 +34,14 @@ const Hero = () => {
                     <div className="mt-4 flex flex-col sm:flex-row gap-4">
                         <button
                             onClick={() => navigate("/whiteboard")}
-                            className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-full 
+                            className="px-6 py-3 bg-black text-white font-semibold  
                             shadow-md hover:bg-blue-700 transition duration-300"
                         >
                             Go to Whiteboard
                         </button>
                         <button
                             onClick={() => navigate("/resume-builder")}
-                            className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-full 
+                            className="px-6 py-3 bg-black text-white font-semibold 
                             shadow-md hover:bg-blue-700 transition duration-300"
                         >
                             Build Resume

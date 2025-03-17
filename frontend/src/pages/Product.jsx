@@ -7,7 +7,7 @@ import VideoLectures from "../components/VideoLectures";
 
 const Product = () => {
   const { productId } = useParams();
-  const navigate = useNavigate(); // ✅ Initialize useNavigate
+  const navigate = useNavigate(); 
   const { products, currency, addToCart } = useContext(ShopContext);
   const [productData, setProductData] = useState(null);
   const [image, setImage] = useState('');
@@ -55,7 +55,7 @@ const Product = () => {
           {/* ✅ ADD TO CART BUTTON (No Size Required) */}
           <button
             onClick={() => addToCart(productData._id)}
-            className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700"
+            className="bg-black text-white px-8 py-3 text-sm  hover:bg-blue-700 transition duration-300 active:bg-gray-700"
           >
             ADD TO CART
           </button>

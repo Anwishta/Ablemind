@@ -4,50 +4,27 @@ import { Mic, MicOff } from "lucide-react";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 import Style from "../css/chatbot.module.css";
 
-const ChatBot = () => {
+const ChatBot = ({ isVoiceNavListening, stopVoiceNavListening }) => {
   const [open, setOpen] = useState(false);
   const menuRef = useRef();
 
   const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
 
-  const close = () => {
-    setOpen(false);
-  };
-
-  const toggle = () => {
-    setOpen(!open);
-  };
-
-  useEffect(() => {
-    let handler = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
-        close();
+  const handleMicToggle = () => {
+    if (listening) {
+      SpeechRecognition.stopListening();
+    } else {
+      if (isVoiceNavListening) {
+        stopVoiceNavListening(); // Stop voice navigation mic
       }
-    };
-    document.addEventListener("mousedown", handler);
-
-    return () => {
-      document.removeEventListener("mousedown", handler);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (transcript && open) {
-      sendVoiceInputToChatbot(transcript);
-    }
-  }, [transcript]);
-
-  const sendVoiceInputToChatbot = (message) => {
-    const chatbotIframe = document.getElementById("chatbot-frame");
-    if (chatbotIframe) {
-      chatbotIframe.contentWindow.postMessage({ text: message }, "*");
+      SpeechRecognition.startListening({ continuous: true });
     }
   };
 
   return (
     <>
       <div className={Style.chatBot} ref={menuRef}>
-        <div className={Style.chatWrapper} onClick={toggle}>
+        <div className={Style.chatWrapper} onClick={() => setOpen(!open)}>
           <IoChatbubbleEllipses className={Style.icon} />
         </div>
 
@@ -62,7 +39,7 @@ const ChatBot = () => {
           ></iframe>
 
           <button
-            onClick={() => listening ? SpeechRecognition.stopListening() : SpeechRecognition.startListening({ continuous: true })}
+            onClick={handleMicToggle}
             className={`absolute bottom-12 right-12 w-10 h-10 rounded-full flex items-center justify-center 
               transition-all duration-300 shadow-md hover:shadow-lg
             `}

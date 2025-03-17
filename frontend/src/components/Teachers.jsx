@@ -77,7 +77,7 @@ const Teachers = () => {
             />
             <h2 className="text-xl font-semibold text-gray-800 dark:text-white">{teacher.name}</h2>
             <p className="text-gray-600 dark:text-gray-300 text-sm">{teacher.subject}</p>
-            <div className="mt-2">
+            <div className="mt-2 ml-16">
               <StarRating rating={teacher.rating} />
             </div>
           </div>
