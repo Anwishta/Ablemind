@@ -6,6 +6,7 @@ import GoogleTranslator from "./GoogleTranslator";
 import FontSizeAdjuster from "./FontSizeAdjuster";
 import SlideButton from "./SlideButton";
 import DarkModeToggle from "./DarkModeToggle";
+import SearchBar from "./SearchBar";
 
 const Navbar = ({ toggleCursor, toggleTheme }) => {
   const [isDarkMode, setIsDarkMode] = useState(() => localStorage.getItem("darkMode") === "true");
@@ -51,33 +52,39 @@ const Navbar = ({ toggleCursor, toggleTheme }) => {
 
       {/* 🔹 Navigation Links */}
       <ul className="hidden sm:flex gap-5 text-sm">
-        {["/", "/collection", "/about", "/contact"].map((path, index) => (
-          <NavLink
-            key={index}
-            to={path}
-            className={({ isActive }) =>
-              `flex flex-col items-center gap-1 ${
-                isActive ? "border-b-2 border-gray-500 dark:border-white" : ""
-              } ${isDarkMode ? "text-white" : "text-black"}`
-            }
-          >
-            <p>{path === "/" ? "HOME" : path.slice(1).toUpperCase()}</p>
-          </NavLink>
-        ))}
-      </ul>
+  {["/", "/courses", "/about", "/contact"].map((path, index) => (
+    <NavLink key={index} to={path} className="flex flex-col items-center gap-1 group navbar-links">
+      {({ isActive }) => (
+        <>
+          <p>{path === "/" ? "HOME" : path.slice(1).toUpperCase()}</p>
+          <hr
+            className={`w-2/4 border-none h-[1.5px] bg-gray-700 dark:bg-white opacity-0 group-hover:opacity-100 transition-opacity ${
+              isActive ? "opacity-100" : ""
+            }`}
+          />
+        </>
+      )}
+    </NavLink>
+  ))}
+</ul>
+
+
+
+
 
       {/* 🔹 Right Side Icons */}
       <div className="flex items-center gap-6">
         {/* Search Icon */}
         <img
           onClick={() => {
-            navigate("/collection");
+            navigate("/courses");
             setShowSearch(true);
           }}
           src={assets.search_icon}
           className="w-5 cursor-pointer"
           alt="Search Icon"
         />
+        
 
         {/* Dark Mode Toggle */}
         <DarkModeToggle onToggle={handleDarkModeToggle} />
