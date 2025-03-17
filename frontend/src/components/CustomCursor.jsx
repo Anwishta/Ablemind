@@ -26,7 +26,7 @@ const CustomCursor = ({ isCursorEnabled }) => {
         if (hoveredElement) {
           if (hoveredElement.tagName === "IMG" && hoveredElement.alt) {
             textToRead = hoveredElement.alt; // Read image alt text
-          } else if (hoveredElement.textContent.trim()) {
+          } else {
             const range = getRangeFromPoint(e.clientX, e.clientY);
             if (range) {
               textToRead = getHoveredWord(hoveredElement.textContent.trim(), range.startOffset);
@@ -34,9 +34,10 @@ const CustomCursor = ({ isCursorEnabled }) => {
           }
         }
 
-        if (textToRead && textToRead !== hoveredWord) {
+        // Speak only full words (ignore letters/symbols)
+        if (textToRead && textToRead !== hoveredWord && textToRead.length > 2) {
           setHoveredWord(textToRead);
-          setTimeout(() => speakWord(textToRead), 200); // Delay speech to prevent stuttering
+          setTimeout(() => speakWord(textToRead), 200);
         } else if (!textToRead) {
           setHoveredWord(null);
           synth.cancel();
@@ -51,17 +52,17 @@ const CustomCursor = ({ isCursorEnabled }) => {
 
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseleave", handleMouseLeave);
-    document.body.style.cursor = "none"; // Hide default cursor
+    document.body.style.cursor = "none";
 
     return () => {
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseleave", handleMouseLeave);
-      document.body.style.cursor = "auto"; // Restore default cursor
+      document.body.style.cursor = "auto";
       if (animationFrameId) cancelAnimationFrame(animationFrameId);
     };
   }, [hoveredWord, isCursorEnabled]);
 
-  // Fallback for caretRangeFromPoint
+  // Get the text at the cursor position
   const getRangeFromPoint = (x, y) => {
     if (document.caretRangeFromPoint) {
       return document.caretRangeFromPoint(x, y);
@@ -75,10 +76,11 @@ const CustomCursor = ({ isCursorEnabled }) => {
     return null;
   };
 
-  // Improved word detection using regex
+  // Improved word extraction: Ignore symbols, single letters, numbers
   const getHoveredWord = (text, offset) => {
     if (!text) return null;
-    const words = text.match(/\S+/g); // Extracts words ignoring multiple spaces
+    
+    const words = text.match(/\b[a-zA-Z]{3,}\b/g); // Extract only real words (min 3 letters)
     if (!words) return null;
 
     let charCount = 0;
@@ -96,11 +98,11 @@ const CustomCursor = ({ isCursorEnabled }) => {
     synth.speak(utterance);
   };
 
-  if (!isCursorEnabled) return null; // Don't render cursor when disabled
+  if (!isCursorEnabled) return null;
 
   return (
     <div
-      className="fixed top-0 left-0 w-6 h-6 bg-[#000000] rounded-full pointer-events-none transition-transform duration-200 ease-out scale-125"
+      className="fixed top-0 left-0 w-6 h-6 bg-black rounded-full pointer-events-none transition-transform duration-200 ease-out scale-125"
       style={{
         transform: `translate(${position.x}px, ${position.y}px)`,
       }}
